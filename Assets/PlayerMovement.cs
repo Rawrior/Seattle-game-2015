@@ -3,21 +3,28 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public string Horizontal;
+    public string Vertical;
+
 
 	// Use this for initialization
 	void Start ()
     {
-	    
+        Debug.Log(gameObject.tag);
+        Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
+        Debug.Log(Horizontal);
+        Vertical = "Vertical0" + tag[gameObject.tag.Length - 1];
+        Debug.Log(Vertical);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        movement();
+        movement(Horizontal, Vertical);
 	}
 
-    void movement()
+    void movement(string horizontal, string vertical)
     {
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0)* 10 * Time.deltaTime);
+        transform.Translate(new Vector2(Input.GetAxis(horizontal), Input.GetAxis(vertical))* 10 * Time.deltaTime);
     }
 }
