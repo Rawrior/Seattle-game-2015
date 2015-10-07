@@ -8,8 +8,9 @@ public class JumpRollWalljump : MonoBehaviour
     public bool player3Playing = false;
     public bool player4Playing = false;
     public string playerPlaying;
-    public float jumpCD;
-    public bool canJump;
+    public float jumpDuration;
+    public float jumpHight = 3.5f;
+    public float jumpSpeed;
 
 	// Use this for initialization
 	void Start ()
@@ -26,11 +27,41 @@ public class JumpRollWalljump : MonoBehaviour
 	}
     void Jump()
     {
-        if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4) && canJump == true))
+        if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= 0.25f)
         {
-            jumpCD += Time.deltaTime;
-            Debug.Log("jumping");
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 50), ForceMode2D.Force);
+            jumpSpeed = 5f;
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
+            jumpDuration += Time.deltaTime;
+            Debug.Log("P1 jumping");
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
+        }
+        else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= 0.25f)
+        {
+            jumpSpeed = 5f;
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
+            jumpDuration += Time.deltaTime;
+            Debug.Log("P2 jumping");
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
+        }
+        else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= 0.25f)
+        {
+            jumpSpeed = 5f;
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
+            jumpDuration += Time.deltaTime;
+            Debug.Log("P3 jumping");
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
+        }
+        else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= 0.25f)
+        {
+            jumpSpeed = 5f;
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
+            jumpDuration += Time.deltaTime;
+            Debug.Log(" P4jumping");
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
+        }
+        else
+        {
+            jumpSpeed = 0;
         }
     }
     void whoIsPlaying()
@@ -52,15 +83,11 @@ public class JumpRollWalljump : MonoBehaviour
             player4Playing = true;
 	    }
     }
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ground"))
         {
-            canJump = true;
-        }
-        else
-        {
-            canJump = false;
+            jumpDuration = 0;
         }
     }
 }

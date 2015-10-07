@@ -13,14 +13,16 @@ public class ShootScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-	    Debug.Log(Input.GetAxis("Fire1"));
+        Debug.Log(Input.GetKey("joystick 2 button 5"));
 	}
 
-    private void ShootingMethod(bool shootButton)
+    private void ShootingMethod(string shootButton, GameObject arrow, float horizontal, float vertical)
     {
-        if (shootButton)
+        transform.LookAt(transform.position + Vector3.);
+
+        if (Input.GetKeyDown(shootButton))
         {
-            
+            Instantiate(arrow, transform.position, transform.rotation);
         }
     }
 }
