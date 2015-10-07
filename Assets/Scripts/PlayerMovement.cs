@@ -5,8 +5,6 @@ public class PlayerMovement : MonoBehaviour
 {
     public string Horizontal;
     public string Vertical;
-
-
 	// Use this for initialization
 	void Start ()
     {
