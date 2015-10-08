@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     public bool rolling;
     public bool rollingLeft;
     public bool rollingRight;
-    public int rollDistance = 50;
     public bool canWallJump;
     public int wallJumpHeight = 10;
     public int moveSpeed = 10;
@@ -29,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isStunned = false;
     public float stunTimer;
     public bool canStun;
+    private int rollDistance = 20;
 
     public string Horizontal;
 	// Use this for initialization
@@ -67,9 +67,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rollTimer += Time.deltaTime;
         }
-        else if (rolling == false)
+        if ( rolling == true && rollTimer >= 1)
         {
             rollTimer = 0;
+            rolling = false;
         }
         if (airborne == true)
         {
@@ -89,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     void movement(string horizontal)
     {
-        if (rolling == false && isStunned == false)
+        if (( rolling == false | rollTimer >= 0.3f) && isStunned == false)
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }
@@ -97,15 +98,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void Jump()
     {
-        if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && rolling == false)
+        if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 5f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
             Debug.Log("P1 jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
-        else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && rolling == false)
+        else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 5f;
             airborne = true;
@@ -113,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("P2 jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
-        else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && rolling == false)
+        else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 5f;
             airborne = true;
@@ -121,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("P3 jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
-        else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && rolling == false)
+        else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 5f;
             airborne = true;
@@ -176,34 +177,30 @@ public class PlayerMovement : MonoBehaviour
     }
     void Roll(string rollDirectionLeft, string rollDirectionRight)
     {
-
-        if ( airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 1f)
+        if (airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 0.1f && rolling == false && rollingRight == false)
         {
-            Debug.Log("rolling left");
             rollingLeft = true;
             rolling = true;
         }
-        if (airborne == false && Input.GetAxis(rollDirectionRight) >= 0.1f && rollTimer <= 1f)
+        if (airborne == false && Input.GetAxis(rollDirectionRight) >= 0.1f && rollTimer <= 0.1f && rolling == false && rollingLeft == false)
         {
-            Debug.Log("rolling right");
             rollingRight = true;
             rolling = true;
         }
-        if (rollingRight == true)
+        if (rolling == true && rollingLeft == true)
         {
-            Debug.Log("actually rolling right");
-            transform.Translate(new Vector2(rollDistance, 0)  * 1.5f* Time.deltaTime);
+            transform.Translate(new Vector2(-rollDistance, 0) * Time.deltaTime);
+            Debug.Log("rolling left");
         }
-        if (rollingLeft == true)
+        if (rolling == true && rollingRight == true)
         {
-            Debug.Log("actually rolling left");
-            transform.Translate(new Vector2(-rollDistance, 0) * 1.5f* Time.deltaTime);
+            transform.Translate(new Vector2(rollDistance, 0)* Time.deltaTime);
+            Debug.Log("rolling right");
         }
         if (rollTimer >= 0.2f)
         {
             rollingLeft = false;
             rollingRight = false;
-            rolling = false;
         }
     }
     void wallJump()
@@ -211,12 +208,13 @@ public class PlayerMovement : MonoBehaviour
         if (airborne == true && canWallJump == true && player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
         {
             haveIWallJumped = true;
-            GetComponent<Rigidbody2D>().velocity = (new Vector2(-2, 7));
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(-7, 15));
             Debug.Log("walljumping");
         }
     }
     void OnTriggerStay2D(Collider2D other)
     {
+        Debug.Log(other);
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
             Debug.Log(canStun);
@@ -242,6 +240,21 @@ public class PlayerMovement : MonoBehaviour
             canStun = false;
         }
         if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+        if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+        if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+        if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0))
         {
             Debug.Log("stunning");
             other.GetComponent<PlayerMovement>().isStunned = true;
