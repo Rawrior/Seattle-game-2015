@@ -17,7 +17,7 @@ public class JumpRollWalljump : MonoBehaviour
     {
         playerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();
-        Debug.Log(playerPlaying);
+        //Debug.Log(playerPlaying);
 	}
 	
 	// Update is called once per frame
@@ -32,7 +32,7 @@ public class JumpRollWalljump : MonoBehaviour
             jumpSpeed = 5f;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
             jumpDuration += Time.deltaTime;
-            Debug.Log("P1 jumping");
+            //Debug.Log("P1 jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= 0.25f)
@@ -40,7 +40,7 @@ public class JumpRollWalljump : MonoBehaviour
             jumpSpeed = 5f;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
             jumpDuration += Time.deltaTime;
-            Debug.Log("P2 jumping");
+            //Debug.Log("P2 jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= 0.25f)
@@ -48,7 +48,7 @@ public class JumpRollWalljump : MonoBehaviour
             jumpSpeed = 5f;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
             jumpDuration += Time.deltaTime;
-            Debug.Log("P3 jumping");
+            //Debug.Log("P3 jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= 0.25f)
@@ -56,7 +56,7 @@ public class JumpRollWalljump : MonoBehaviour
             jumpSpeed = 5f;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
             jumpDuration += Time.deltaTime;
-            Debug.Log(" P4jumping");
+            //Debug.Log(" P4jumping");
             //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else
