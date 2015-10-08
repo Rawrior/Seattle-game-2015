@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         movement(Horizontal);
         Roll(rollLeft, rollRight);
         wallJump();
-        Debug.Log(canStun);
+        //Debug.Log(canStun);
 	}
 
     void movement(string horizontal)
@@ -95,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
+
     void Jump()
     {
         if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && rolling == false)
@@ -134,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
             jumpSpeed = 0;
         }
     }
+
     void whoIsPlaying()
     {
         if (playerPlaying == "P1")
@@ -153,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
             player4Playing = true;
         }
     }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ground"))
@@ -174,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
     void Roll(string rollDirectionLeft, string rollDirectionRight)
     {
 
@@ -206,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
             rolling = false;
         }
     }
+
     void wallJump()
     {
         if (airborne == true && canWallJump == true && player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
@@ -215,6 +220,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("walljumping");
         }
     }
+    
     void OnTriggerStay2D(Collider2D other)
     {
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))

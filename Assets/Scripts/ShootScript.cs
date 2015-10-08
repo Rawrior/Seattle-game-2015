@@ -30,7 +30,7 @@ public class ShootScript : MonoBehaviour
         float deadZone = 0.2f;
         Vector2 stickInput = new Vector2(Input.GetAxis(horizontal), Input.GetAxis(vertical));
 
-        Debug.Log(stickInput);
+        //Debug.Log(stickInput);
 
         if (stickInput.magnitude > deadZone)
         {
@@ -44,12 +44,12 @@ public class ShootScript : MonoBehaviour
             }
 
             //float angle = Mathf.Atan2(Input.GetAxisRaw(horizontal), Input.GetAxisRaw(vertical)) * Mathf.Rad2Deg;
-            Debug.Log(angle);
+            //Debug.Log(angle);
             //Debug.Log(Input.GetAxis(vertical));
             //Debug.Log(Input.GetAxis(horizontal));
 
             //transform.LookAt(transform.position + new Vector3(Input.GetAxis(horizontal), Input.GetAxis(vertical), 0), -Vector3.forward);
-            transform.localRotation = Quaternion.Euler(0, 0, angle);
+            transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
         }
 
         if (Input.GetButtonDown(shootButton))
