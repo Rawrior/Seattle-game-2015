@@ -7,7 +7,8 @@ public class ArrowBehavior : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	    GetComponent<Rigidbody2D>().AddForce(ShootStrength, ForceMode2D.Impulse);
+        Debug.Log("Runnin Start");
+        GetComponent<Rigidbody2D>().AddForce(transform.right*ShootStrength,ForceMode2D.Impulse);
 	}
 	
 	// Update is called once per frame

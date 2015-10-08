@@ -27,8 +27,10 @@ public class ShootScript : MonoBehaviour
 
     private void ShootingMethod(string shootButton, GameObject arrow, string horizontal, string vertical)
     {
-        float angle = Mathf.Atan2(Input.GetAxis(horizontal), Input.GetAxis(vertical))*Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(Input.GetAxisRaw(horizontal), Input.GetAxisRaw(vertical)) * Mathf.Rad2Deg;
         //Debug.Log(angle);
+        //Debug.Log(Input.GetAxisRaw(vertical));
+        //Debug.Log(Input.GetAxisRaw(horizontal));
 
         //transform.LookAt(transform.position + new Vector3(Input.GetAxis(horizontal), Input.GetAxis(vertical), 0), -Vector3.forward);
         transform.localRotation = Quaternion.Euler(0, 0, angle);
