@@ -27,13 +27,30 @@ public class ShootScript : MonoBehaviour
 
     private void ShootingMethod(string shootButton, GameObject arrow, string horizontal, string vertical)
     {
-        float angle = Mathf.Atan2(Input.GetAxisRaw(horizontal), Input.GetAxisRaw(vertical)) * Mathf.Rad2Deg;
-        //Debug.Log(angle);
-        //Debug.Log(Input.GetAxisRaw(vertical));
-        //Debug.Log(Input.GetAxisRaw(horizontal));
+        float deadZone = 0.2f;
+        Vector2 stickInput = new Vector2(Input.GetAxis(horizontal), Input.GetAxis(vertical));
 
-        //transform.LookAt(transform.position + new Vector3(Input.GetAxis(horizontal), Input.GetAxis(vertical), 0), -Vector3.forward);
-        transform.localRotation = Quaternion.Euler(0, 0, angle);
+        Debug.Log(stickInput);
+
+        if (stickInput.magnitude > deadZone)
+        {
+            float angle = Vector2.Angle(Vector2.up, stickInput);
+            Vector3 cross = Vector3.Cross(Vector2.up, stickInput);
+            //Debug.Log(angle);
+
+            if (cross.z > 0)
+            {
+                angle = 360 - angle;
+            }
+
+            //float angle = Mathf.Atan2(Input.GetAxisRaw(horizontal), Input.GetAxisRaw(vertical)) * Mathf.Rad2Deg;
+            Debug.Log(angle);
+            //Debug.Log(Input.GetAxis(vertical));
+            //Debug.Log(Input.GetAxis(horizontal));
+
+            //transform.LookAt(transform.position + new Vector3(Input.GetAxis(horizontal), Input.GetAxis(vertical), 0), -Vector3.forward);
+            transform.localRotation = Quaternion.Euler(0, 0, angle);
+        }
 
         if (Input.GetButtonDown(shootButton))
         {
