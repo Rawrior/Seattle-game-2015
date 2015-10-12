@@ -220,7 +220,7 @@ public class PlayerMovement : MonoBehaviour
     
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other);
+        //Debug.Log(other);
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
             Debug.Log(canStun);

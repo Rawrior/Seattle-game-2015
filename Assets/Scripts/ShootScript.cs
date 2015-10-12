@@ -11,7 +11,7 @@ public class ShootScript : MonoBehaviour
     private string HoriAim;
     private string VertAim;
     private string Fire;
-    private float ChargeTime;
+    public float ChargeTime;
 
     //The object to shoot out from the player.
     public GameObject ArrowObject;
@@ -99,7 +99,7 @@ public class ShootScript : MonoBehaviour
             if (ChargeTime > ChargeThreshold)
             {
                 //Spawns the arrow at the current position and rotation.
-                Instantiate(arrow, transform.position, transform.rotation);
+                Instantiate(arrow, transform.position + transform.right * 1, transform.rotation);
                 //Then reset the chargetime
                 ChargeTime = 0;
             }
