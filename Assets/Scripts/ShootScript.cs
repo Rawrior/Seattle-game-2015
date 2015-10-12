@@ -11,10 +11,14 @@ public class ShootScript : MonoBehaviour
     private string HoriAim;
     private string VertAim;
     private string Fire;
-    
+    private float ChargeTime;
+
     //The object to shoot out from the player.
     public GameObject ArrowObject;
-
+    
+    //The threshold for when the player can shoot, in seconds. Change in Unity Editor.
+    public float ChargeThreshold;
+    
     //---------
     //Scripting
     //---------
@@ -35,10 +39,6 @@ public class ShootScript : MonoBehaviour
     {
         //Call ShootingMethod with the appropriate arguments.
         ShootingMethod(Fire, ArrowObject, HoriAim, VertAim);
-
-        //Debug.Log(Input.GetButton("Fire1"));
-        //Debug.Log(Input.GetAxis("HoriAim1"));
-        //Debug.Log(Input.GetAxis("VertAim1"));
 	}
 
     //Handles aiming and shooting.
@@ -61,8 +61,6 @@ public class ShootScript : MonoBehaviour
         //Define a vector from the inputs of each axis. Will be used to check for 
         Vector2 stickInput = new Vector2(Input.GetAxis(horizontal), Input.GetAxis(vertical));
 
-        //Debug.Log(stickInput);
-
         //If the aiming vector gets outside the deadzone, evaluate the code inside
         //Otherwise, do nothing. This keeps the aim at the previous input when the stick isn't used.
         if (stickInput.magnitude > deadZone)
@@ -70,14 +68,16 @@ public class ShootScript : MonoBehaviour
             //Define the angle. Found by calculating the angle between an always-up vector and the input.
             float angle = Vector2.Angle(Vector2.up, stickInput);
 
-            ////Finds the cross-product between the vectors
-            //Vector3 cross = Vector3.Cross(Vector2.up, stickInput);
-            ////Debug.Log(cross);
+            //Finds the cross-product between the vectors.
+            Vector3 cross = Vector3.Cross(Vector2.up, stickInput);
 
-            //if (cross.z > 0)
-            //{
-            //    angle = 360 - angle;
-            //}
+            //If the crossproduct is bigger than 0 run code.
+            if (cross.z > 0)
+            {
+                //Subtract 360 from the angle. Effectively, this lets the player aim the full 360 degrees.
+                //Instead of only aiming to the right half-circle.
+                angle = 360 - angle;
+            }
 
             //Rotates the GameObject used for aiming to the angle, compensated by 90 degrees.
             //Otherwise, aiming up would aim left, aiming right would aim up, etc etc.
@@ -85,11 +85,30 @@ public class ShootScript : MonoBehaviour
         }
 
         //If the shootButton is used, run code. shootButton is right bumper by default.
-        if (Input.GetButtonDown(shootButton))
+        if (Input.GetButton(shootButton))
         {
-            //Spawns the arrow at the current position with the current rotation.
-            //The arrow actually flying is handled by the arrow itself. See ArrowBehavior script.
-            Instantiate(arrow, transform.position, transform.rotation);
+            //Increase the charged time by 1 second per second.
+            ChargeTime += Time.deltaTime;
+        }
+
+        //When shootButton is released, run code.
+        if (Input.GetButtonUp(shootButton))
+        {
+            //Check if the time charged is above the threshold for shooting.
+            //If it is, run code below...
+            if (ChargeTime > ChargeThreshold)
+            {
+                //Spawns the arrow at the current position and rotation.
+                Instantiate(arrow, transform.position, transform.rotation);
+                //Then reset the chargetime
+                ChargeTime = 0;
+            }
+            //... Else, do this
+            else
+            {
+                //Reset the chargetime to 0.
+                ChargeTime = 0;
+            }
         }
     }
 }
