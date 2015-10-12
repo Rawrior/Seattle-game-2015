@@ -36,7 +36,7 @@ public class ShootScript : MonoBehaviour
         //Call ShootingMethod with the appropriate arguments.
         ShootingMethod(Fire, ArrowObject, HoriAim, VertAim);
 
-        //Debug.Log(Input.GetButton("Fire1"));
+        Debug.Log(Input.GetButton("Fire1"));
         //Debug.Log(Input.GetAxis("HoriAim1"));
         //Debug.Log(Input.GetAxis("VertAim1"));
 	}

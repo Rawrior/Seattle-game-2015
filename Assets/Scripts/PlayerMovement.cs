@@ -38,23 +38,20 @@ public class PlayerMovement : MonoBehaviour
         playerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();
         Debug.Log(playerPlaying);
-        Debug.Log(gameObject.tag);
         Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
-        Debug.Log(Horizontal);
         rollLeft = "LT0" + tag[gameObject.tag.Length - 1];
         rollRight = "RT0" + tag[gameObject.tag.Length - 1];
-        Debug.Log(rollLeft);
-        Debug.Log(rollRight);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
         if (isStunned == true)
         {
             stunTimer += Time.deltaTime;
         }
-        if (stunTimer >= 0.5f)
+        if (stunTimer >= 2f)
         {
             isStunned = false;
             stunTimer = 0;
@@ -85,51 +82,43 @@ public class PlayerMovement : MonoBehaviour
         movement(Horizontal);
         Roll(rollLeft, rollRight);
         wallJump();
-        //Debug.Log(canStun);
 	}
 
     void movement(string horizontal)
     {
+        //checks if you're tolling or stunned, and if not, you can move horizontaly
         if (( rolling == false | rollTimer >= 0.3f) && isStunned == false)
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
-        }
-        
+        }   
     }
 
     void Jump()
     {
+        //adds velocity to the current playing player to give it a jump.
         if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-            Debug.Log("P1 jumping");
-            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 5f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-            Debug.Log("P2 jumping");
-            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 5f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-            Debug.Log("P3 jumping");
-            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 5f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-            Debug.Log("P4 jumping");
-            //GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
         }
         else
         {
@@ -139,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
     void whoIsPlaying()
     {
+        //checking what player is currently playing.
         if (playerPlaying == "P1")
         {
             player1Playing = true;
@@ -159,16 +149,19 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        //checking if we're standing on the ground, or are airborne.
         if (other.CompareTag("Ground"))
         {
             airborne = false;
             jumpDuration = 0;
         }
+        //checking if you're grounded and touching a wall for elighability to do a walljump
         if (other.CompareTag("Wall") && airborne == true)
         {
             haveTouchedWall = true;
             canWallJump = true;
         }
+        //returns false peramiters so you will be unable to walljump when standing on the ground.
         if (other.CompareTag("Ground") && airborne == false)
         {
             haveTouchedWall = false;
@@ -181,6 +174,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Roll(string rollDirectionLeft, string rollDirectionRight)
     {
+        //in here we are making a rollfunction when you click the right and left trigger on an xbox 360 controller.
+        //first we check if you are allowed to perform a roll, turning false if you're already rolling,  are in the air, or have rolled within the last second.
         if (airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 0.1f && rolling == false && rollingRight == false)
         {
             rollingLeft = true;
@@ -191,16 +186,16 @@ public class PlayerMovement : MonoBehaviour
             rollingRight = true;
             rolling = true;
         }
+        //iif you then were able to roll, this code will roll you in the direction you pressed the triger.
         if (rolling == true && rollingLeft == true)
         {
             transform.Translate(new Vector2(-rollDistance, 0) * Time.deltaTime);
-            Debug.Log("rolling left");
         }
         if (rolling == true && rollingRight == true)
         {
             transform.Translate(new Vector2(rollDistance, 0)* Time.deltaTime);
-            Debug.Log("rolling right");
         }
+        //this prevents you from holding the button down to keep rolling. and also determins the length of your roll.
         if (rollTimer >= 0.2f)
         {
             rollingLeft = false;
@@ -210,17 +205,18 @@ public class PlayerMovement : MonoBehaviour
 
     void wallJump()
     {
+        //If you've touched the wall you have 0.2 seconds to perfom a walljump, increasing you velocity to shoot you upwards and towards the other sida than the wall.
         if (airborne == true && canWallJump == true && player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
         {
             haveIWallJumped = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(-7, 15));
-            Debug.Log("walljumping");
         }
     }
     
     void OnTriggerStay2D(Collider2D other)
     {
         Debug.Log(other);
+        //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
             Debug.Log(canStun);
@@ -245,26 +241,27 @@ public class PlayerMovement : MonoBehaviour
         {
             canStun = false;
         }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0))
+        //stunning the player by pressing the "A" button
+        if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0) && !other.CompareTag("Player01"))
         {
             Debug.Log("stunning");
             other.GetComponent<PlayerMovement>().isStunned = true;
         }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0))
+        if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0) && !other.CompareTag("Player02"))
         {
             Debug.Log("stunning");
             other.GetComponent<PlayerMovement>().isStunned = true;
         }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0))
+        if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0) && !other.CompareTag("Player03"))
         {
             Debug.Log("stunning");
             other.GetComponent<PlayerMovement>().isStunned = true;
         }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0))
+        if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0) && !other.CompareTag("Player04"))
         {
             Debug.Log("stunning");
             other.GetComponent<PlayerMovement>().isStunned = true;
         }
     }
-    
+
 }
