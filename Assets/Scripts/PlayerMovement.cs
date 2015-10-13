@@ -223,22 +223,22 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(other);
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         else

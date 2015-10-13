@@ -11,13 +11,14 @@ public class ShootScript : MonoBehaviour
     private string HoriAim;
     private string VertAim;
     private string Fire;
-    public float ChargeTime;
+    private float ChargeTime;
 
     //The object to shoot out from the player.
     public GameObject ArrowObject;
     
     //The threshold for when the player can shoot, in seconds. Change in Unity Editor.
     public float ChargeThreshold;
+    public int ArrowCount;
     
     //---------
     //Scripting
@@ -32,6 +33,9 @@ public class ShootScript : MonoBehaviour
 	    HoriAim = "HoriAim" + tag[gameObject.tag.Length - 1];
         VertAim = "VertAim" + tag[gameObject.tag.Length - 1];
         Fire = "Fire" + tag[gameObject.tag.Length - 1];
+
+        //Starts the player with 3 arrows
+	    ArrowCount = 3;
 	}
 	
 	// Update is called once per frame
@@ -96,10 +100,15 @@ public class ShootScript : MonoBehaviour
         {
             //Check if the time charged is above the threshold for shooting.
             //If it is, run code below...
-            if (ChargeTime > ChargeThreshold)
+            if (ChargeTime > ChargeThreshold && ArrowCount > 0)
             {
                 //Spawns the arrow at the current position and rotation.
-                Instantiate(arrow, transform.position + transform.right * 1, transform.rotation);
+                GameObject arrowObject = (GameObject)Instantiate(arrow, transform.position + transform.right * 1.1f, transform.rotation);
+
+                arrowObject.GetComponent<ArrowBehavior>().IgnoreTags[2] = "Player0" + tag[gameObject.tag.Length - 1];
+
+                ArrowCount--;
+
                 //Then reset the chargetime
                 ChargeTime = 0;
             }
