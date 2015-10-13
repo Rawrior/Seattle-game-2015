@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         movement(Horizontal);
         Roll(rollLeft, rollRight);
         wallJump();
-        Debug.Log(canStun);
+        //Debug.Log(canStun);
 	}
 
     void movement(string horizontal)
@@ -96,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
+
     void Jump()
     {
         if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
@@ -135,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
             jumpSpeed = 0;
         }
     }
+
     void whoIsPlaying()
     {
         if (playerPlaying == "P1")
@@ -154,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
             player4Playing = true;
         }
     }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ground"))
@@ -175,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
     void Roll(string rollDirectionLeft, string rollDirectionRight)
     {
         if (airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 0.1f && rolling == false && rollingRight == false)
@@ -203,6 +207,7 @@ public class PlayerMovement : MonoBehaviour
             rollingRight = false;
         }
     }
+
     void wallJump()
     {
         if (airborne == true && canWallJump == true && player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
@@ -212,27 +217,28 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("walljumping");
         }
     }
+    
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other);
+        //Debug.Log(other);
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         else
