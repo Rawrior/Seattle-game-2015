@@ -52,6 +52,7 @@ public class ArrowBehavior : MonoBehaviour
             //If the collider is then another player, destroy them. DESTROOOOY THEM!
             Destroy(other.gameObject);
         }
+
         //Else, check if the collider is the ground or a wall.
         else if (other.CompareTag("Ground") || other.CompareTag("Wall"))
         {
