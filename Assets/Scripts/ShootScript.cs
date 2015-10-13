@@ -11,6 +11,8 @@ public class ShootScript : MonoBehaviour
     private string HoriAim;
     private string VertAim;
     private string Fire;
+
+    //Defines how long the player has been charging, in seconds.
     private float ChargeTime;
 
     //The object to shoot out from the player.
@@ -18,6 +20,8 @@ public class ShootScript : MonoBehaviour
     
     //The threshold for when the player can shoot, in seconds. Change in Unity Editor.
     public float ChargeThreshold;
+
+    //The amount of arrows the player has.
     public int ArrowCount;
     
     //---------
@@ -28,8 +32,7 @@ public class ShootScript : MonoBehaviour
 	void Start ()
 	{
         //Each of these are defined by looking at the very last character in the objects tag
-        //This will be 1 through 4 for each player.
-        //Points to the appropriate players joystick input for each axis and button
+        //This will be 1 through 4 for each player, which points to the appropriate players joystick input for each axis and button
 	    HoriAim = "HoriAim" + tag[gameObject.tag.Length - 1];
         VertAim = "VertAim" + tag[gameObject.tag.Length - 1];
         Fire = "Fire" + tag[gameObject.tag.Length - 1];
@@ -98,15 +101,17 @@ public class ShootScript : MonoBehaviour
         //When shootButton is released, run code.
         if (Input.GetButtonUp(shootButton))
         {
-            //Check if the time charged is above the threshold for shooting.
+            //Check if the time charged is above the threshold for shooting, and if the player has any arrows.
             //If it is, run code below...
             if (ChargeTime > ChargeThreshold && ArrowCount > 0)
             {
-                //Spawns the arrow at the current position and rotation.
+                //Spawns the arrow at the edge of the bow and with current rotation.
                 GameObject arrowObject = (GameObject)Instantiate(arrow, transform.position + transform.right * 1.1f, transform.rotation);
 
+                //Sets the Arrow's last tag to ignore to the player's current tag.
                 arrowObject.GetComponent<ArrowBehavior>().IgnoreTags[2] = "Player0" + tag[gameObject.tag.Length - 1];
 
+                //Depletes one arrow from the players "quiver".
                 ArrowCount--;
 
                 //Then reset the chargetime
