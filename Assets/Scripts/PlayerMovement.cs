@@ -215,26 +215,30 @@ public class PlayerMovement : MonoBehaviour
     
     void OnTriggerStay2D(Collider2D other)
     {
+<<<<<<< HEAD
         Debug.Log(other);
         //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
+=======
+        //Debug.Log(other);
+>>>>>>> 2a5aa1c073a68f7fcf6605245fbd99ef1af016dc
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         if (player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
         {
-            Debug.Log(canStun);
+            //Debug.Log(canStun);
             canStun = true;
         }
         else
