@@ -13,7 +13,7 @@ public class ShootScript : MonoBehaviour
     private string Fire;
 
     //Defines how long the player has been charging, in seconds.
-    private float ChargeTime;
+    public float ChargeTime;
 
     //The object to shoot out from the player.
     public GameObject ArrowObject;
@@ -89,17 +89,23 @@ public class ShootScript : MonoBehaviour
             //Rotates the GameObject used for aiming to the angle, compensated by 90 degrees.
             //Otherwise, aiming up would aim left, aiming right would aim up, etc etc.
             transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
-        }
 
-        //If the shootButton is used, run code. shootButton is right bumper by default.
-        if (Input.GetButton(shootButton))
-        {
-            //Increase the charged time by 1 second per second.
             ChargeTime += Time.deltaTime;
         }
+        else
+        {
+            ChargeTime = 0;
+        }
+
+        ////If the shootButton is used, run code. shootButton is right bumper by default.
+        //if (Input.GetButton(shootButton))
+        //{
+        //    //Increase the charged time by 1 second per second.
+        //    ChargeTime += Time.deltaTime;
+        //}
 
         //When shootButton is released, run code.
-        if (Input.GetButtonUp(shootButton))
+        if (Input.GetButtonDown(shootButton))
         {
             //Check if the time charged is above the threshold for shooting, and if the player has any arrows.
             //If it is, run code below...
