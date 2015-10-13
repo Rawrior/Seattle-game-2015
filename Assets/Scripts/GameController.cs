@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
         //Reloads the level if R is pressed.
 	    if (Input.GetKeyDown(KeyCode.R))
 	    {
-	        Application.LoadLevel("Scene01");
+	        Application.LoadLevel(0);
 	    }
 
         //Quits the game if escape is pressed.

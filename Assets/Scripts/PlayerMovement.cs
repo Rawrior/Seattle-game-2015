@@ -28,13 +28,13 @@ public class PlayerMovement : MonoBehaviour
     public bool isStunned = false;
     public float stunTimer;
     public bool canStun;
-    private int rollDistance = 20;
+    private int rollDistance = 15;
 
     public string Horizontal;
 	// Use this for initialization
 	void Start ()
     {
-        jumpTime = 0.25f;
+        jumpTime = 0.2f;
         playerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();
         Debug.Log(playerPlaying);
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (airborne == false)
         {
-            moveSpeed = 10;
+            moveSpeed = 5;
         }
         Jump();
         movement(Horizontal);
@@ -98,25 +98,25 @@ public class PlayerMovement : MonoBehaviour
         //adds velocity to the current playing player to give it a jump.
         if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 7f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 7f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 7f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 7f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
@@ -176,12 +176,12 @@ public class PlayerMovement : MonoBehaviour
     {
         //in here we are making a rollfunction when you click the right and left trigger on an xbox 360 controller.
         //first we check if you are allowed to perform a roll, turning false if you're already rolling,  are in the air, or have rolled within the last second.
-        if (airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 0.1f && rolling == false && rollingRight == false)
+        if (airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 0.05f && rolling == false && rollingRight == false)
         {
             rollingLeft = true;
             rolling = true;
         }
-        if (airborne == false && Input.GetAxis(rollDirectionRight) >= 0.1f && rollTimer <= 0.1f && rolling == false && rollingLeft == false)
+        if (airborne == false && Input.GetAxis(rollDirectionRight) >= 0.1f && rollTimer <= 0.05f && rolling == false && rollingLeft == false)
         {
             rollingRight = true;
             rolling = true;
@@ -196,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
             transform.Translate(new Vector2(rollDistance, 0)* Time.deltaTime);
         }
         //this prevents you from holding the button down to keep rolling. and also determins the length of your roll.
-        if (rollTimer >= 0.2f)
+        if (rollTimer >= 0.1f)
         {
             rollingLeft = false;
             rollingRight = false;
