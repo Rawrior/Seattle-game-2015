@@ -104,19 +104,19 @@ public class PlayerMovement : MonoBehaviour
         }
         else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 5f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 5f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 5f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
@@ -215,12 +215,9 @@ public class PlayerMovement : MonoBehaviour
     
     void OnTriggerStay2D(Collider2D other)
     {
-<<<<<<< HEAD
         Debug.Log(other);
         //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
-=======
         //Debug.Log(other);
->>>>>>> 2a5aa1c073a68f7fcf6605245fbd99ef1af016dc
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         {
             //Debug.Log(canStun);
