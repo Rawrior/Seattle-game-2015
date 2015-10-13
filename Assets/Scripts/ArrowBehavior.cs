@@ -35,10 +35,20 @@ public class ArrowBehavior : MonoBehaviour
 	    CanKill = true;
     }
 
-    //void Update()
-    //{
-    //    Debug.Log(CanKill);
-    //}
+    void Update()
+    {
+        FlyRotation();
+    }
+
+    private void FlyRotation()
+    {
+        if (GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+        {
+            Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+            float angle = Mathf.Atan2(velocity.y, velocity.x)*Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+    }
 
     //When a collider enters the trigger (or vice-versa. Technically not, but y'know)
     private void OnTriggerEnter2D(Collider2D other)
