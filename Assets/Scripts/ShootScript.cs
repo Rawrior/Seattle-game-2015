@@ -66,7 +66,7 @@ public class ShootScript : MonoBehaviour
         //Define a deadzone size. Current is 20% of full input.
         //Doesn't need to be less or have gradient sensitivity since the aiming works like twin-stick shooter.
         //Make bigger to negate "stick whiplash" (even if that is barely a problem)
-        float deadZone = 0.2f;
+        float deadZone = 0.5f;
 
         //Define a vector from the inputs of each axis. Will be used to check for 
         Vector2 stickInput = new Vector2(Input.GetAxis(horizontal), Input.GetAxis(vertical));
@@ -99,6 +99,7 @@ public class ShootScript : MonoBehaviour
         {
             //Increase the charged time by 1 second per second.
             ChargeTime += Time.deltaTime;
+
         }
 
         //When shootButton is released, run code.

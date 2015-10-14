@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
 	void Update () 
     {
         //Reloads the level if R is pressed.
-	    if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.Joystick1Button7))
 	    {
 	        Application.LoadLevel(0);
 	    }
