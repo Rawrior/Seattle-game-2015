@@ -14,9 +14,9 @@ public class GameController : MonoBehaviour
 	void Update () 
     {
         //Reloads the level if R is pressed.
-	    if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.Joystick1Button7))
 	    {
-	        Application.LoadLevel("Scene01");
+	        Application.LoadLevel(0);
 	    }
 
         //Quits the game if escape is pressed.
