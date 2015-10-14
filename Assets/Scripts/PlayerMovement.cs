@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (airborne == true)
         {
-            moveSpeed = 5;
+            moveSpeed = 3;
             jumpDuration += Time.deltaTime;
         }
         if (airborne == false)
@@ -96,27 +96,27 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         //adds velocity to the current playing player to give it a jump.
-        if ((player1Playing == true) && (Input.GetKey(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((airborne == false && player1Playing == true) && (Input.GetKeyDown(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 7f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
-        else if ((player2Playing == true) && (Input.GetKey(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((airborne == false && player2Playing == true) && (Input.GetKeyDown(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 7f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
-        else if ((player3Playing == true) && (Input.GetKey(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((airborne == false && player3Playing == true) && (Input.GetKeyDown(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 7f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
-        else if ((player4Playing == true) && (Input.GetKey(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((airborne == false && player4Playing == true) && (Input.GetKeyDown(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 7f;
+            jumpSpeed = 10f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
             rollingLeft = true;
             rolling = true;
         }
-        if (airborne == false && Input.GetAxis(rollDirectionRight) >= 0.1f && rollTimer <= 0.05f && rolling == false && rollingLeft == false)
+        if (airborne == false && Input.GetAxis(rollDirectionLeft) * -1 >= 0.1f && rollTimer <= 0.05f && rolling == false && rollingLeft == false)
         {
             rollingRight = true;
             rolling = true;
@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         if (airborne == true && canWallJump == true && player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
         {
             haveIWallJumped = true;
-            GetComponent<Rigidbody2D>().velocity = (new Vector2(-7, 15));
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 10));
         }
     }
     
