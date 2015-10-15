@@ -1,21 +1,21 @@
 fileFormatVersion: 2
 guid: aa3c81a32b532fa4baa90dabe9f8d6ad
-timeCreated: 1444854014
+timeCreated: 1444929848
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: RunSheet_0
-    21300002: RunSheet_1
-    21300004: RunSheet_2
-    21300006: RunSheet_3
-    21300008: RunSheet_4
-    21300010: RunSheet_5
-    21300012: RunSheet_6
-    21300014: RunSheet_7
-    21300016: RunSheet_8
-    21300018: RunSheet_9
-    21300020: RunSheet_10
-    21300022: RunSheet_11
+    21300000: Run_0
+    21300002: Run_1
+    21300004: Run_2
+    21300006: Run_3
+    21300008: Run_4
+    21300010: Run_5
+    21300012: Run_6
+    21300014: Run_7
+    21300016: Run_8
+    21300018: Run_9
+    21300020: Run_10
+    21300022: Run_11
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -62,7 +62,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: RunSheet_0
+    - name: Run_0
       rect:
         serializedVersion: 2
         x: 0
@@ -70,9 +70,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_1
+    - name: Run_1
       rect:
         serializedVersion: 2
         x: 32
@@ -80,9 +80,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_2
+    - name: Run_2
       rect:
         serializedVersion: 2
         x: 64
@@ -90,9 +90,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_3
+    - name: Run_3
       rect:
         serializedVersion: 2
         x: 96
@@ -100,9 +100,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_4
+    - name: Run_4
       rect:
         serializedVersion: 2
         x: 0
@@ -110,9 +110,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_5
+    - name: Run_5
       rect:
         serializedVersion: 2
         x: 32
@@ -120,9 +120,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_6
+    - name: Run_6
       rect:
         serializedVersion: 2
         x: 64
@@ -130,9 +130,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_7
+    - name: Run_7
       rect:
         serializedVersion: 2
         x: 96
@@ -140,9 +140,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_8
+    - name: Run_8
       rect:
         serializedVersion: 2
         x: 0
@@ -150,9 +150,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_9
+    - name: Run_9
       rect:
         serializedVersion: 2
         x: 32
@@ -160,9 +160,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_10
+    - name: Run_10
       rect:
         serializedVersion: 2
         x: 64
@@ -170,9 +170,9 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RunSheet_11
+    - name: Run_11
       rect:
         serializedVersion: 2
         x: 96
@@ -180,7 +180,7 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

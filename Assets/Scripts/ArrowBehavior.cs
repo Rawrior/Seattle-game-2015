@@ -25,11 +25,11 @@ public class ArrowBehavior : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        Debug.Log(GetComponent<Rigidbody2D>().isKinematic);
+        //Debug.Log(GetComponent<Rigidbody2D>().isKinematic);
         //Debug.Log("Runnin Start"); 
 
         //Adds the ShootStrength to the arrow when it's spawned
-        GetComponent<Rigidbody2D>().AddForce(transform.right*ShootStrength,ForceMode2D.Impulse);
+        GetComponent<Rigidbody2D>().AddForce(-transform.right*ShootStrength,ForceMode2D.Impulse);
 
         //Makes the arrow a cold-blooded murderer
 	    CanKill = true;
@@ -64,7 +64,7 @@ public class ArrowBehavior : MonoBehaviour
         }
 
         //Else, check if the collider is the ground or a wall.
-        else if (other.CompareTag("Ground") || other.CompareTag("Wall"))
+        else if (IgnoreTags.Contains(other.tag) && !other.CompareTag(IgnoreTags[0]))
         {
             ////Set the arrow's velocity to 0
             //gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
@@ -77,19 +77,19 @@ public class ArrowBehavior : MonoBehaviour
             CanKill = false;
         }
 
-        //Check if the collider is not the ground and not the wall.
-        if (!CanKill && !other.CompareTag("Ground") && !other.CompareTag("Wall"))
-        {
-            //If it's neither, then check for the collider's (player's) first child object (the bow arm)
-            //and see if it has the ShootScript component, and if the player's arrows is under 3.
-            if (other.transform.GetChild(0).GetComponent<ShootScript>().ArrowCount < 3)
-            {
-                //If it is, add 1 to the count.
-                other.transform.GetChild(0).GetComponent<ShootScript>().ArrowCount++;
+        ////Check if the collider is not the ground and not the wall.
+        //if (!CanKill && !other.CompareTag(IgnoreTags[1]))
+        //{
+        //    //If it's neither, then check for the collider's (player's) first child object (the bow arm)
+        //    //and see if it has the ShootScript component, and if the player's arrows is under 3.
+        //    if (other.transform.GetChild(0).GetComponent<ShootScript>().ArrowCount < 3)
+        //    {
+        //        //If it is, add 1 to the count.
+        //        other.transform.GetChild(0).GetComponent<ShootScript>().ArrowCount++;
 
-                //Then destroy self.
-                Destroy(gameObject);
-            }
-        }
+        //        //Then destroy self.
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }

@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: 3c29fe9bb6d025f4299417ad70481135
-timeCreated: 1444856562
+timeCreated: 1444929868
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: JumpSheet_0
-    21300002: JumpSheet_1
-    21300004: JumpSheet_2
+    21300000: Jump_0
+    21300002: Jump_1
+    21300004: Jump_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,7 +53,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: JumpSheet_0
+    - name: Jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -63,7 +63,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JumpSheet_1
+    - name: Jump_1
       rect:
         serializedVersion: 2
         x: 32
@@ -73,7 +73,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: JumpSheet_2
+    - name: Jump_2
       rect:
         serializedVersion: 2
         x: 64
