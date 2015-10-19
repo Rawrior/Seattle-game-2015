@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public float stunTimer;
     public bool canStun;
     private int rollDistance = 15;
+    private RaycastHit2D hit;
 
     public string Horizontal;
 	// Use this for initialization
@@ -46,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+         hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
+         Debug.DrawRay(transform.position, Vector2.down * 0.6f);
+
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
         if (isStunned == true)
         {
@@ -82,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         movement(Horizontal);
         Roll(rollLeft, rollRight);
         wallJump();
+        RaycastMethod();
 	}
 
     void movement(string horizontal)
@@ -99,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
         if ((airborne == false && player1Playing == true) && (Input.GetKeyDown(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
             jumpSpeed = 10f;
-            airborne = true;
+            //airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         if ((airborne == false && player2Playing == true) && (Input.GetKeyDown(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
@@ -147,14 +152,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void RaycastMethod()
     {
-        //checking if we're standing on the ground, or are airborne.
-        if (other.CompareTag("Ground"))
+        if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
         {
             airborne = false;
             jumpDuration = 0;
         }
+        else
+        {
+            airborne = true;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        ////checking if we're standing on the ground, or are airborne.
+        //if (other.CompareTag("Ground"))
+        //{
+        //    airborne = false;
+        //    jumpDuration = 0;
+        //}
         //checking if you're grounded and touching a wall for elighability to do a walljump
         if (other.CompareTag("Wall") && airborne == true)
         {
@@ -168,6 +186,13 @@ public class PlayerMovement : MonoBehaviour
             wallJumpTimer = 0;
             haveIWallJumped = false;
             canWallJump = false;
+        }
+
+        //Pick up arrows
+        if (other.CompareTag("Arrow") && GetComponentInChildren<ShootScript>().ArrowCount < 3)
+        {
+            GetComponentInChildren<ShootScript>().ArrowCount++;
+            Destroy(other.gameObject);
         }
     }
 
