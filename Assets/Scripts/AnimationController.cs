@@ -6,6 +6,7 @@ public class AnimationController : MonoBehaviour
     private Animator Animator;
     public string Horizontal;
     public float YSpeed;
+    private bool FacingRight;
     //public float currentX;
     //public float currentY;
     //public float previousX;
@@ -28,41 +29,48 @@ public class AnimationController : MonoBehaviour
 	{
 	    YSpeed = GetComponentInParent<Rigidbody2D>().velocity.y;
         StateChange(Horizontal, YSpeed);
+        FlipMethod(FacingRight);
+
+        Debug.Log(Animator.GetInteger("state"));
         //Debug.Log(Input.GetAxis(Horizontal));
         //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
 	}
 
     private void StateChange(string horizontal, float ySpeed)
     {
-        if (Input.GetAxis(horizontal) < 0)
+        if (Input.GetAxis(horizontal) < 0 && ySpeed == 0)
         {
             Animator.SetInteger("state", 1);
-            transform.localScale = new Vector3(1,1,1);
+            FacingRight = true;
         }
-        else if (Input.GetAxis(horizontal) > 0)
+        else if (Input.GetAxis(horizontal) > 0 && ySpeed == 0)
         {
             Animator.SetInteger("state", 1);
-            transform.localScale = new Vector3(-1,1,1);
+            FacingRight = false;
         }
-        else if (Input.GetAxis(horizontal) == 0)
+        else if (ySpeed > 0)
+        {
+            Animator.SetInteger("state", 2);
+        }
+        else if (ySpeed < 0)
+        {
+            Animator.SetInteger("state", 3);
+        }
+        else
         {
             Animator.SetInteger("state", 0);
         }
+    }
 
-        //currentX = transform.position.x;
-        //currentY = transform.position.y;
-
-        //if (currentX < previousX)
-        //{
-        //    //transform.Rotate(0,180,0);
-        //    Animator.SetInteger("state", 1);
-        //}
-        //else if (currentX > previousX)
-        //{
-        //    Animator.SetInteger("state", 2);
-        //}
-
-        //previousX = currentX;
-        //previousY = currentY;
+    private void FlipMethod(bool facingRight)
+    {
+        if (facingRight)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 }

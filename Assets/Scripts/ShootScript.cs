@@ -130,14 +130,14 @@ public class ShootScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log(other.tag);
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    Debug.Log(other.tag);
 
-        if (other.CompareTag("Arrow") && ArrowCount < 3)
-        {
-            ArrowCount++;
-            Destroy(other.gameObject);
-        }
-    }
+    //    if (other.CompareTag("Arrow") && ArrowCount < 3)
+    //    {
+    //        ArrowCount++;
+    //        Destroy(other.gameObject);
+    //    }
+    //}
 }
