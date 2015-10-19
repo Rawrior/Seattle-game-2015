@@ -14,7 +14,7 @@ public class RotateSpriteController : MonoBehaviour
 	void Update () 
     {
 	    RotateMethod();
-        Debug.Log(gameObject.transform.parent.transform.localEulerAngles.z);
+        //Debug.Log(gameObject.transform.parent.transform.localEulerAngles.z);
 	}
 
     private void RotateMethod()

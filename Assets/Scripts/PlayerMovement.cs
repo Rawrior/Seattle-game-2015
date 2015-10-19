@@ -169,7 +169,6 @@ public class PlayerMovement : MonoBehaviour
             haveIWallJumped = false;
             canWallJump = false;
         }
-
     }
 
     void Roll(string rollDirectionLeft, string rollDirectionRight)
