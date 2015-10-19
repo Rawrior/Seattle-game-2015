@@ -31,7 +31,7 @@ public class AnimationController : MonoBehaviour
         StateChange(Horizontal, YSpeed);
         FlipMethod(FacingRight);
 
-        Debug.Log(Animator.GetInteger("state"));
+        //Debug.Log(Animator.GetInteger("state"));
         //Debug.Log(Input.GetAxis(Horizontal));
         //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
 	}

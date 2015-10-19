@@ -53,9 +53,9 @@ public class PlayerMovement : MonoBehaviour
 	void Update ()
     {
          //hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
-        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down * 0.1f);
-        Debug.DrawRay(transform.position + new Vector3(0,-0.5f,0), Vector2.down * 0.1f);
-        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down * 0.1f);
+        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f);
+        Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f);
+        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f);
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
         if (isStunned == true)
@@ -163,10 +163,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (RaycastHit() && hit.collider.gameObject.CompareTag("Ground"))
         {
+            Debug.Log(hit.collider.gameObject.tag);
             airborne = false;
             jumpDuration = 0;
         }
-        else
+        else if (!RaycastHit())
         {
             airborne = true;
         }
@@ -174,12 +175,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        ////checking if we're standing on the ground, or are airborne.
-        //if (other.CompareTag("Ground"))
-        //{
-        //    airborne = false;
-        //    jumpDuration = 0;
-        //}
         //checking if you're grounded and touching a wall for elighability to do a walljump
         if (other.CompareTag("Wall") && airborne == true)
         {
@@ -298,23 +293,23 @@ public class PlayerMovement : MonoBehaviour
 
     public bool RaycastHit()
     {
-        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.6f) /*rays[0]*/)
+        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f) /*rays[0]*/)
         {
             //Debug.Log("Hit");
             //hit = rays[0];
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.6f);
+            hit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f);
             return true;
         }
-        else if (Physics2D.Raycast(transform.position, Vector2.down, 0.6f))
+        else if (Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f))
         {
             //Debug.Log("Hit");
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.down, 0.6f);
+            hit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f);
             return true;
         }
-        else if (Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0, 0), Vector2.down, 0.6f))
+        else if (Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f))
         {
             //Debug.Log("Hit");
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.down, 0.6f);
+            hit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f);
             return true;
         }
         else
