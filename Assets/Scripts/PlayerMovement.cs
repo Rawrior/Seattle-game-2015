@@ -169,7 +169,6 @@ public class PlayerMovement : MonoBehaviour
             haveIWallJumped = false;
             canWallJump = false;
         }
-
     }
 
     void Roll(string rollDirectionLeft, string rollDirectionRight)
@@ -215,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
     
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other);
+        //Debug.Log(other);
         //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
         //Debug.Log(other);
         if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))

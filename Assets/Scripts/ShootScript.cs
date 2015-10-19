@@ -46,7 +46,7 @@ public class ShootScript : MonoBehaviour
     {
         //Call ShootingMethod with the appropriate arguments.
         ShootingMethod(Fire, ArrowObject, HoriAim, VertAim);
-        Debug.Log(Input.GetButton("Fire1"));
+        //Debug.Log(Input.GetButton("Fire1"));
         //Debug.Log(Input.GetAxis("HoriAim1"));
         //Debug.Log(Input.GetAxis("VertAim1"));
 	}
@@ -91,7 +91,7 @@ public class ShootScript : MonoBehaviour
 
             //Rotates the GameObject used for aiming to the angle, compensated by 90 degrees.
             //Otherwise, aiming up would aim left, aiming right would aim up, etc etc.
-            transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
+            transform.localRotation = Quaternion.Euler(0, 0, angle + 90);
         }
 
         //If the shootButton is used, run code. shootButton is right bumper by default.
@@ -110,10 +110,10 @@ public class ShootScript : MonoBehaviour
             if (ChargeTime > ChargeThreshold && ArrowCount > 0)
             {
                 //Spawns the arrow at the edge of the bow and with current rotation.
-                GameObject arrowObject = (GameObject)Instantiate(arrow, transform.position + transform.right * 1.1f, transform.rotation);
+                GameObject arrowObject = (GameObject)Instantiate(arrow, transform.position + -transform.right * 1.1f, transform.rotation);
 
                 //Sets the Arrow's last tag to ignore to the player's current tag.
-                arrowObject.GetComponent<ArrowBehavior>().IgnoreTags[2] = "Player0" + tag[gameObject.tag.Length - 1];
+                arrowObject.GetComponent<ArrowBehavior>().IgnoreTags[0] = "Player0" + tag[gameObject.tag.Length - 1];
 
                 //Depletes one arrow from the players "quiver".
                 ArrowCount--;
@@ -127,6 +127,17 @@ public class ShootScript : MonoBehaviour
                 //Reset the chargetime to 0.
                 ChargeTime = 0;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(other.tag);
+
+        if (other.CompareTag("Arrow") && ArrowCount < 3)
+        {
+            ArrowCount++;
+            Destroy(other.gameObject);
         }
     }
 }
