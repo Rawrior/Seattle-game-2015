@@ -7,6 +7,7 @@ public class ArrowBehavior : MonoBehaviour
     //---------
     //Variables
     //---------
+    public bool usedArrow;
 
     //Defines the arrowspeed
     public float ShootStrength;
@@ -53,14 +54,42 @@ public class ArrowBehavior : MonoBehaviour
     //When a collider enters the trigger (or vice-versa. Technically not, but y'know)
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Wall") || other.CompareTag("Ground") || other.CompareTag("Roof"))
+        {
+            CanKill = false;
+            usedArrow = true;
+        }
+        
         //Check if the collider has any of the tags in the ignore list.
         //This will be Ground, Wall and the player that shot the arrow.
         //Also check if the arrow can kill. Default is true.
         if (!IgnoreTags.Contains(other.tag) && CanKill)
         {
+            if (other.CompareTag("Player01") && usedArrow == false)
+            {
+                RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
+                respawnControl.player01Dead = true;
+            }
+            if (other.CompareTag("Player02") && usedArrow == false)
+            {
+                RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
+                respawnControl.player02Dead = true;
+            }
+            if (other.CompareTag("Player03") && usedArrow == false)
+            {
+                RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
+                respawnControl.player03Dead = true;
+            }
+            if (other.CompareTag("Player04") && usedArrow == false)
+            {
+                RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
+                respawnControl.player04Dead = true;
+            }
             //Debug.Log("Hit " + other.tag);
             //If the collider is then another player, destroy them. DESTROOOOY THEM!
             Destroy(other.gameObject);
+
+
         }
 
         //Else, check if the collider is the ground or a wall.
