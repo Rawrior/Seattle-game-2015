@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canStun;
     private int rollDistance = 15;
     private RaycastHit2D hit;
+    //private RaycastHit2D[] rays;
 
     public string Horizontal;
 	// Use this for initialization
@@ -42,13 +43,19 @@ public class PlayerMovement : MonoBehaviour
         Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
         rollLeft = "LT0" + tag[gameObject.tag.Length - 1];
         rollRight = "RT0" + tag[gameObject.tag.Length - 1];
+
+        //rays[0] = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.1f);
+        //rays[1] = Physics2D.Raycast(transform.position + new Vector3(0, -0.5f, 0), Vector2.down, 0.1f);
+        //rays[2] = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down, 0.1f);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-         hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
-         Debug.DrawRay(transform.position, Vector2.down * 0.6f);
+         //hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
+        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down * 0.1f);
+        Debug.DrawRay(transform.position + new Vector3(0,-0.5f,0), Vector2.down * 0.1f);
+        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down * 0.1f);
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
         if (isStunned == true)
@@ -154,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
     void RaycastMethod()
     {
-        if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
+        if (RaycastHit() && hit.collider.gameObject.CompareTag("Ground"))
         {
             airborne = false;
             jumpDuration = 0;
@@ -289,4 +296,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool RaycastHit()
+    {
+        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.6f) /*rays[0]*/)
+        {
+            //Debug.Log("Hit");
+            //hit = rays[0];
+            hit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.6f);
+            return true;
+        }
+        else if (Physics2D.Raycast(transform.position, Vector2.down, 0.6f))
+        {
+            //Debug.Log("Hit");
+            hit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.down, 0.6f);
+            return true;
+        }
+        else if (Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0, 0), Vector2.down, 0.6f))
+        {
+            //Debug.Log("Hit");
+            hit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.down, 0.6f);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
