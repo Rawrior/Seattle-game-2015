@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canStun;
     private int rollDistance = 15;
     private RaycastHit2D hit;
+    private int LayerMask;
     //private RaycastHit2D[] rays;
 
     public string Horizontal;
@@ -39,23 +40,25 @@ public class PlayerMovement : MonoBehaviour
         jumpTime = 0.2f;
         playerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();
-        Debug.Log(playerPlaying);
         Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
         rollLeft = "LT0" + tag[gameObject.tag.Length - 1];
         rollRight = "RT0" + tag[gameObject.tag.Length - 1];
 
-        //rays[0] = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.1f);
-        //rays[1] = Physics2D.Raycast(transform.position + new Vector3(0, -0.5f, 0), Vector2.down, 0.1f);
-        //rays[2] = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down, 0.1f);
-	}
+	    LayerMask = 1 << 8;
+	    LayerMask = ~LayerMask;
+	    //rays[0] = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.1f);
+	    //rays[1] = Physics2D.Raycast(transform.position + new Vector3(0, -0.5f, 0), Vector2.down, 0.1f);
+	    //rays[2] = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down, 0.1f);
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
          //hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
-        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down * 0.1f);
-        Debug.DrawRay(transform.position + new Vector3(0,-0.5f,0), Vector2.down * 0.1f);
-        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down * 0.1f);
+        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f);
+        Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f);
+        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f);
+        //Debug.Log(RaycastHit());
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
         if (isStunned == true)
@@ -110,25 +113,25 @@ public class PlayerMovement : MonoBehaviour
         //adds velocity to the current playing player to give it a jump.
         if ((airborne == false && player1Playing == true) && (Input.GetKeyDown(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 12f;
             //airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         if ((airborne == false && player2Playing == true) && (Input.GetKeyDown(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 12f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         if ((airborne == false && player3Playing == true) && (Input.GetKeyDown(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 12f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         if ((airborne == false && player4Playing == true) && (Input.GetKeyDown(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
         {
-            jumpSpeed = 10f;
+            jumpSpeed = 12f;
             airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
@@ -161,12 +164,13 @@ public class PlayerMovement : MonoBehaviour
 
     void RaycastMethod()
     {
-        if (RaycastHit() && hit.collider.gameObject.CompareTag("Ground"))
+        if (RaycastHit())
         {
+            //Debug.Log(hit.collider.gameObject.tag);
             airborne = false;
             jumpDuration = 0;
         }
-        else
+        else if (!RaycastHit())
         {
             airborne = true;
         }
@@ -174,12 +178,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        ////checking if we're standing on the ground, or are airborne.
-        //if (other.CompareTag("Ground"))
-        //{
-        //    airborne = false;
-        //    jumpDuration = 0;
-        //}
         //checking if you're grounded and touching a wall for elighability to do a walljump
         if (other.CompareTag("Wall") && airborne == true)
         {
@@ -196,8 +194,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Pick up arrows
-        if (other.CompareTag("Arrow") && GetComponentInChildren<ShootScript>().ArrowCount < 3)
+        if (other.CompareTag("Arrow") && GetComponentInChildren<ShootScript>().ArrowCount < 3 && other.GetComponent<ArrowBehavior>().CanKill == false)
         {
+            Debug.Log("Picked up an arrow");
             GetComponentInChildren<ShootScript>().ArrowCount++;
             Destroy(other.gameObject);
         }
@@ -298,23 +297,19 @@ public class PlayerMovement : MonoBehaviour
 
     public bool RaycastHit()
     {
-        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.6f) /*rays[0]*/)
+        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask) /*rays[0]*/)
         {
-            //Debug.Log("Hit");
-            //hit = rays[0];
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.6f);
+            hit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
-        else if (Physics2D.Raycast(transform.position, Vector2.down, 0.6f))
+        else if (Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            //Debug.Log("Hit");
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.down, 0.6f);
+            hit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
-        else if (Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0, 0), Vector2.down, 0.6f))
+        else if (Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            //Debug.Log("Hit");
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.down, 0.6f);
+            hit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else

@@ -7,13 +7,13 @@ public class ArrowBehavior : MonoBehaviour
     //---------
     //Variables
     //---------
-    public bool usedArrow;
+    public bool UsedArrow;
 
     //Defines the arrowspeed
     public float ShootStrength;
 
     //Used to make sure the player won't die when trying to pick up arrows.
-    private bool CanKill;
+    public bool CanKill;
 
     //The list of tags the arrow should NOT kill.
     //Just shortens down the if-statement condition line.
@@ -26,6 +26,7 @@ public class ArrowBehavior : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+        UsedArrow = false;
         //Debug.Log(GetComponent<Rigidbody2D>().isKinematic);
         //Debug.Log("Runnin Start"); 
 
@@ -34,6 +35,8 @@ public class ArrowBehavior : MonoBehaviour
 
         //Makes the arrow a cold-blooded murderer
 	    CanKill = true;
+
+	    
     }
 
     void Update()
@@ -57,7 +60,7 @@ public class ArrowBehavior : MonoBehaviour
         if (other.CompareTag("Wall") || other.CompareTag("Ground") || other.CompareTag("Roof"))
         {
             CanKill = false;
-            usedArrow = true;
+            UsedArrow = true;
         }
         
         //Check if the collider has any of the tags in the ignore list.
@@ -65,22 +68,22 @@ public class ArrowBehavior : MonoBehaviour
         //Also check if the arrow can kill. Default is true.
         if (!IgnoreTags.Contains(other.tag) && CanKill)
         {
-            if (other.CompareTag("Player01") && usedArrow == false)
+            if (other.CompareTag("Player01") && UsedArrow == false)
             {
                 RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
                 respawnControl.player01Dead = true;
             }
-            if (other.CompareTag("Player02") && usedArrow == false)
+            if (other.CompareTag("Player02") && UsedArrow == false)
             {
                 RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
                 respawnControl.player02Dead = true;
             }
-            if (other.CompareTag("Player03") && usedArrow == false)
+            if (other.CompareTag("Player03") && UsedArrow == false)
             {
                 RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
                 respawnControl.player03Dead = true;
             }
-            if (other.CompareTag("Player04") && usedArrow == false)
+            if (other.CompareTag("Player04") && UsedArrow == false)
             {
                 RespawnControl respawnControl = GameObject.Find("ScriptProcessor").GetComponent<RespawnControl>();
                 respawnControl.player04Dead = true;
