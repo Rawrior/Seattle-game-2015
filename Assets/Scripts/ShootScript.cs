@@ -110,6 +110,7 @@ public class ShootScript : MonoBehaviour
             if (ChargeTime > ChargeThreshold && ArrowCount > 0)
             {
                 //Spawns the arrow at the edge of the bow and with current rotation.
+                Debug.Log("Shot an arrow");
                 GameObject arrowObject = (GameObject)Instantiate(arrow, transform.position + -transform.right * 0.5f, transform.rotation);
 
                 //Sets the Arrow's last tag to ignore to the player's current tag.
@@ -132,10 +133,9 @@ public class ShootScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.tag);
-
-        if (other.CompareTag("Arrow") && ArrowCount < 3 && other.GetComponent<ArrowBehavior>().usedArrow == true)
+        if (other.CompareTag("Arrow") && ArrowCount < 3 && other.GetComponent<ArrowBehavior>().CanKill == false)
         {
+            Debug.Log("Picked up an arrow");
             ArrowCount++;
             Destroy(other.gameObject);
         }
