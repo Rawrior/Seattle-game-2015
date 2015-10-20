@@ -12,7 +12,6 @@ public class UpperAnimController : MonoBehaviour
 	{
 	    Animator = gameObject.GetComponent<Animator>();
 	    ShootButton = "Fire" + tag[gameObject.tag.Length - 1];
-        Debug.Log(ShootButton);
 	}
 	
 	// Update is called once per frame
@@ -20,8 +19,6 @@ public class UpperAnimController : MonoBehaviour
     {
 		arrowCount = GetComponentInParent<ShootScript>().ArrowCount;
         StateChange(ShootButton, arrowCount);
-
-        Debug.Log(Animator.GetInteger("state"));
 	}
 
     void StateChange(string shootButton, int arrows)

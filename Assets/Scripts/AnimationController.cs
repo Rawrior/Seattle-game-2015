@@ -30,10 +30,6 @@ public class AnimationController : MonoBehaviour
 	    YSpeed = GetComponentInParent<Rigidbody2D>().velocity.y;
         StateChange(Horizontal, YSpeed);
         FlipMethod(FacingRight);
-
-        //Debug.Log(Animator.GetInteger("state"));
-        //Debug.Log(Input.GetAxis(Horizontal));
-        //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
 	}
 
     private void StateChange(string horizontal, float ySpeed)
@@ -48,11 +44,11 @@ public class AnimationController : MonoBehaviour
             Animator.SetInteger("state", 1);
             FacingRight = false;
         }
-        else if (ySpeed > 0)
+        else if (ySpeed > 0.1f)
         {
             Animator.SetInteger("state", 2);
         }
-        else if (ySpeed < 0)
+        else if (ySpeed < -0.1f)
         {
             Animator.SetInteger("state", 3);
         }
