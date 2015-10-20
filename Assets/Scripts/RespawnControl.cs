@@ -28,6 +28,7 @@ public class RespawnControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        playersToSpawn();
         if (player01Dead == true)
         {
             respawnTimer01 += Time.deltaTime;
@@ -69,4 +70,28 @@ public class RespawnControl : MonoBehaviour
             player04Dead = false;
         }
 	}
+    void playersToSpawn()
+    {
+        if (PlayersPlaying.playersPlaying == 2)
+        {
+            Instantiate(deadPlayer01, respawnLocation01, Quaternion.identity);
+            Instantiate(deadPlayer02, respawnLocation02, Quaternion.identity);
+            PlayersPlaying.playersPlaying = 0;
+        }
+        if (PlayersPlaying.playersPlaying == 3)
+        {
+            Instantiate(deadPlayer01, respawnLocation01, Quaternion.identity);
+            Instantiate(deadPlayer02, respawnLocation02, Quaternion.identity);
+            Instantiate(deadPlayer03, respawnLocation03, Quaternion.identity);
+            PlayersPlaying.playersPlaying = 0;
+        }
+        if (PlayersPlaying.playersPlaying == 4)
+        {
+            Instantiate(deadPlayer01, respawnLocation01, Quaternion.identity);
+            Instantiate(deadPlayer02, respawnLocation02, Quaternion.identity);
+            Instantiate(deadPlayer03, respawnLocation03, Quaternion.identity);
+            Instantiate(deadPlayer04, respawnLocation04, Quaternion.identity);
+            PlayersPlaying.playersPlaying = 0;
+        }
+    }
 }
