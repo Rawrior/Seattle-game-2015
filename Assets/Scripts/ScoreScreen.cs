@@ -13,10 +13,10 @@ public class ScoreScreen : MonoBehaviour {
     {
         if (Application.loadedLevel == 4)
         {
-            Debug.Log(PointBehavior.player1Points);
-            Debug.Log(PointBehavior.player2Points);
-            Debug.Log(PointBehavior.player3Points);
-            Debug.Log(PointBehavior.player4Points);
+            Debug.Log(PlayersPlaying.player1Points);
+            Debug.Log(PlayersPlaying.player2Points);
+            Debug.Log(PlayersPlaying.player3Points);
+            Debug.Log(PlayersPlaying.player4Points);
         }
         if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {

@@ -93,19 +93,19 @@ public class ArrowBehavior : MonoBehaviour
             Destroy(other.gameObject);
             if (IgnoreTags.Contains("Player01"))
             {
-                PointBehavior.player1Points++;
+                PlayersPlaying.player1Points++;
             }
             if (IgnoreTags.Contains("Player02"))
             {
-                PointBehavior.player2Points++;
+                PlayersPlaying.player2Points++;
             }
             if (IgnoreTags.Contains("Player03"))
             {
-                PointBehavior.player3Points++;
+                PlayersPlaying.player3Points++;
             }
             if (IgnoreTags.Contains("Player04"))
             {
-                PointBehavior.player4Points++;
+                PlayersPlaying.player4Points++;
             }
         }
 

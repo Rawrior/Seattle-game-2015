@@ -34,7 +34,7 @@ public class RespawnControl : MonoBehaviour
 	void Update ()
     {
 
-        if (PointBehavior.player1Points >= 15 || PointBehavior.player2Points >= 15 || PointBehavior.player3Points >= 15 || PointBehavior.player4Points >= 15)
+        if (PlayersPlaying.player1Points >= 15 || PlayersPlaying.player2Points >= 15 || PlayersPlaying.player3Points >= 15 || PlayersPlaying.player4Points >= 15)
         {
             Application.LoadLevel(4);
         }
@@ -113,9 +113,9 @@ public class RespawnControl : MonoBehaviour
 
     void playerPointScore()
     {
-        player1Score.text = "Player 1 points: " + PointBehavior.player1Points;
-        player2Score.text = "Player 2 points: " + PointBehavior.player2Points;
-        player3Score.text = "Player 3 points: " + PointBehavior.player3Points;
-        player4Score.text = "Player 4 points: " + PointBehavior.player4Points;
+        player1Score.text = "Player 1 points: " + PlayersPlaying.player1Points;
+        player2Score.text = "Player 2 points: " + PlayersPlaying.player2Points;
+        player3Score.text = "Player 3 points: " + PlayersPlaying.player3Points;
+        player4Score.text = "Player 4 points: " + PlayersPlaying.player4Points;
     }
 }
