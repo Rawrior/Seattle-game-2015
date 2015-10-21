@@ -29,6 +29,10 @@ public class MenuScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        PointBehavior.player1Points = 0;
+        PointBehavior.player2Points = 0;
+        PointBehavior.player3Points = 0;
+        PointBehavior.player4Points = 0;
         selectTimer += Time.deltaTime;
         Debug.Log(Input.GetAxis(vertical));
 

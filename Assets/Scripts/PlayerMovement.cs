@@ -37,6 +37,27 @@ public class PlayerMovement : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        if (gameObject.tag == "Player0" + tag[gameObject.tag.Length - 1])
+        {
+            playerPlaying = "Player0" + tag[gameObject.tag.Length - 1];
+        }
+        if (playerPlaying == "Player01")
+        {
+            player1Playing = true;
+        }
+        if (playerPlaying == "Player02")
+        {
+            player2Playing = true;
+        }
+        if (playerPlaying == "Player03")
+        {
+            player3Playing = true;
+        }
+        if (playerPlaying == "Player04")
+        {
+            player4Playing = true;
+        }
+        Debug.Log(playerPlaying);
         jumpTime = 0.2f;
         playerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();

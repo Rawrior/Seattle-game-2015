@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class RespawnControl : MonoBehaviour
 {
+    public Text player1Score;
+    public Text player2Score;
+    public Text player3Score;
+    public Text player4Score;
     public bool player01Dead = false;
     public bool player02Dead = false;
     public bool player03Dead = false;
@@ -28,6 +33,11 @@ public class RespawnControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+
+        if (PointBehavior.player1Points >= 15 || PointBehavior.player2Points >= 15 || PointBehavior.player3Points >= 15 || PointBehavior.player4Points >= 15)
+        {
+            Application.LoadLevel(4);
+        }
         playersToSpawn();
         if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
@@ -73,6 +83,8 @@ public class RespawnControl : MonoBehaviour
             respawnTimer04 = 0;
             player04Dead = false;
         }
+        playerPointScore();
+
 	}
     void playersToSpawn()
     {
@@ -97,5 +109,13 @@ public class RespawnControl : MonoBehaviour
             Instantiate(deadPlayer04, respawnLocation04, Quaternion.identity);
             PlayersPlaying.playersPlaying = 0;
         }
+    }
+
+    void playerPointScore()
+    {
+        player1Score.text = "Player 1 points: " + PointBehavior.player1Points;
+        player2Score.text = "Player 2 points: " + PointBehavior.player2Points;
+        player3Score.text = "Player 3 points: " + PointBehavior.player3Points;
+        player4Score.text = "Player 4 points: " + PointBehavior.player4Points;
     }
 }

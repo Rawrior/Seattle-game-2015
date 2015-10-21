@@ -91,8 +91,22 @@ public class ArrowBehavior : MonoBehaviour
             //Debug.Log("Hit " + other.tag);
             //If the collider is then another player, destroy them. DESTROOOOY THEM!
             Destroy(other.gameObject);
-
-
+            if (IgnoreTags.Contains("Player01"))
+            {
+                PointBehavior.player1Points++;
+            }
+            if (IgnoreTags.Contains("Player02"))
+            {
+                PointBehavior.player2Points++;
+            }
+            if (IgnoreTags.Contains("Player03"))
+            {
+                PointBehavior.player3Points++;
+            }
+            if (IgnoreTags.Contains("Player04"))
+            {
+                PointBehavior.player4Points++;
+            }
         }
 
         //Else, check if the collider is the ground or a wall.
