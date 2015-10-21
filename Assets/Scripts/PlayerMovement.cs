@@ -45,25 +45,7 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerPlaying = "Player0" + tag[gameObject.tag.Length - 1];
         }
-<<<<<<< HEAD
-        //if (playerPlaying == "Player01")
-        //{
-        //    player1Playing = true;
-        //}
-        //if (playerPlaying == "Player02")
-        //{
-        //    player2Playing = true;
-        //}
-        //if (playerPlaying == "Player03")
-        //{
-        //    player3Playing = true;
-        //}
-        //if (playerPlaying == "Player04")
-        //{
-        //    player4Playing = true;
-        //}
-        Debug.Log(playerPlaying);
-=======
+
         if (PlayerPlaying == "Player01")
         {
             Player1Playing = true;
@@ -81,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
             Player4Playing = true;
         }
         Debug.Log(PlayerPlaying);
->>>>>>> Simon_Develop
+
         jumpTime = 0.2f;
         PlayerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();
@@ -95,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-<<<<<<< HEAD
         spawnCampProtection += Time.deltaTime;
         if (spawnCampProtection <= 2f)
         {
@@ -108,17 +89,13 @@ public class PlayerMovement : MonoBehaviour
             enableIframes = false;
         }
          //JumpHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
-        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
-        //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.3f, Color.blue);
-        //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.3f, Color.blue);
+        //Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
+        //Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
+        //Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
+        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.3f, Color.blue);
+        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.3f, Color.blue);
         //Debug.Log(JumpRaycastHit());
 
-=======
-        Debug.DrawRay(transform.position, transform.right * 0.5f, Color.blue);
-        Debug.DrawRay(transform.position, -transform.right * 0.5f, Color.blue);
->>>>>>> Simon_Develop
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
 
         //if (isStunned == true)
@@ -174,18 +151,10 @@ public class PlayerMovement : MonoBehaviour
 
     void movement(string horizontal)
     {
-
         //checks if you're tolling or stunned, and if not, you can move horizontaly
-<<<<<<< HEAD
-        if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false¨*/ && MoveRaycastHit(Horizontal))
-
-        //checks if you're rolling or stunned, and if not, you can move horizontaly
-        if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false*/)
-
-=======
-        if (( RollCooldown == false | RollTimer >= 0.1f) && isStunned == false && MoveRaycastHit())
->>>>>>> Simon_Develop
+        if ((RollCooldown == false || RollTimer >= 0.3f) && MoveRaycastHit())
         {
+            Debug.Log("Can move");
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   
     }
@@ -257,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+        void OnTriggerEnter2D(Collider2D other)
     {
         //checking if you're grounded and touching a wall for elighability to do a walljump
         if (other.CompareTag("Wall") && Airborne == true)
@@ -338,7 +307,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(other);
         //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
         //Debug.Log(other);
-<<<<<<< HEAD
+
         //if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         //{
         //    //Debug.Log(canStun);
@@ -384,53 +353,6 @@ public class PlayerMovement : MonoBehaviour
         //    Debug.Log("stunning");
         //    other.GetComponent<PlayerMovement>().isStunned = true;
         //}
-=======
-        if (Player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        if (Player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        if (Player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        if (Player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        else
-        {
-            canStun = false;
-        }
-        //stunning the player by pressing the "A" button
-        if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0) && !other.CompareTag("Player01"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0) && !other.CompareTag("Player02"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0) && !other.CompareTag("Player03"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0) && !other.CompareTag("Player04"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
->>>>>>> Simon_Develop
     }
 
     public bool JumpRaycastHit()
@@ -476,7 +398,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     void IFrames()
     {
         if (enableIframes == true)
@@ -489,10 +410,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-=======
     public bool RollRaycastHit()
     {
-        if (RollingRight && Physics2D.Raycast(transform.position, Vector2.right, 045f, LayerMask))
+        if (RollingRight && Physics2D.Raycast(transform.position, Vector2.right, 04f, LayerMask))
         {
             RollHit = Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask);
             return false;
@@ -507,5 +427,4 @@ public class PlayerMovement : MonoBehaviour
             return true;
         }
     }
->>>>>>> Simon_Develop
 }
