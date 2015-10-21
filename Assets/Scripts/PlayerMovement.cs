@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
             GetComponentInChildren<SpriteRenderer>().enabled = true;
             enableIframes = true;
         }
-        else if (spawnCampProtection >= 2f)
+        else if (spawnCampProtection >= 2f && spawnCampProtection <= 2.1f)
         {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             enableIframes = false;
@@ -264,12 +264,14 @@ public class PlayerMovement : MonoBehaviour
         //first we check if you are allowed to perform a roll, turning false if you're already RollCooldown,  are in the air, or have rolled within the last second.
         if (!Airborne && Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
+            enableIframes = true;
             RollingLeft = true;
             RollCooldown = true;
         }
         
         if (!Airborne && -Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
+            enableIframes = true;
             RollingRight = true;
             RollCooldown = true;
         }
@@ -286,8 +288,9 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //this prevents you from holding the button down to keep RollCooldown. and also determins the length of your roll.
-        if (RollTimer >= 0.1f)
+        if (RollTimer >= 0.15f)
         {
+            enableIframes = false;
             RollingLeft = false;
             RollingRight = false;
         }
