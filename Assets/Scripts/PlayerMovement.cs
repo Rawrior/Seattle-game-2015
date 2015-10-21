@@ -25,9 +25,9 @@ public class PlayerMovement : MonoBehaviour
     public bool haveIWallJumped = false;
     public float wallJumpTimer;
     public bool haveTouchedWall = false;
-    public bool isStunned = false;
-    public float stunTimer;
-    public bool canStun;
+    //public bool isStunned = false;
+    //public float stunTimer;
+    //public bool canStun;
     private int rollDistance = 15;
     private RaycastHit2D hit;
     private int LayerMask;
@@ -41,22 +41,22 @@ public class PlayerMovement : MonoBehaviour
         {
             playerPlaying = "Player0" + tag[gameObject.tag.Length - 1];
         }
-        if (playerPlaying == "Player01")
-        {
-            player1Playing = true;
-        }
-        if (playerPlaying == "Player02")
-        {
-            player2Playing = true;
-        }
-        if (playerPlaying == "Player03")
-        {
-            player3Playing = true;
-        }
-        if (playerPlaying == "Player04")
-        {
-            player4Playing = true;
-        }
+        //if (playerPlaying == "Player01")
+        //{
+        //    player1Playing = true;
+        //}
+        //if (playerPlaying == "Player02")
+        //{
+        //    player2Playing = true;
+        //}
+        //if (playerPlaying == "Player03")
+        //{
+        //    player3Playing = true;
+        //}
+        //if (playerPlaying == "Player04")
+        //{
+        //    player4Playing = true;
+        //}
         Debug.Log(playerPlaying);
         jumpTime = 0.2f;
         playerPlaying = "P" + tag[gameObject.tag.Length - 1];
@@ -82,15 +82,15 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(RaycastHit());
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
-        if (isStunned == true)
-        {
-            stunTimer += Time.deltaTime;
-        }
-        if (stunTimer >= 2f)
-        {
-            isStunned = false;
-            stunTimer = 0;
-        }
+        //if (isStunned == true)
+        //{
+        //    stunTimer += Time.deltaTime;
+        //}
+        //if (stunTimer >= 2f)
+        //{
+        //    isStunned = false;
+        //    stunTimer = 0;
+        //}
         if (haveTouchedWall == true)
         {
             wallJumpTimer += Time.deltaTime;
@@ -122,8 +122,8 @@ public class PlayerMovement : MonoBehaviour
 
     void movement(string horizontal)
     {
-        //checks if you're tolling or stunned, and if not, you can move horizontaly
-        if (( rolling == false | rollTimer >= 0.3f) && isStunned == false)
+        //checks if you're rolling or stunned, and if not, you can move horizontaly
+        if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false*/)
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   
@@ -269,51 +269,51 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(other);
         //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
         //Debug.Log(other);
-        if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        if (player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        if (player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        if (player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
-        {
-            //Debug.Log(canStun);
-            canStun = true;
-        }
-        else
-        {
-            canStun = false;
-        }
-        //stunning the player by pressing the "A" button
-        if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0) && !other.CompareTag("Player01"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0) && !other.CompareTag("Player02"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0) && !other.CompareTag("Player03"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
-        if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0) && !other.CompareTag("Player04"))
-        {
-            Debug.Log("stunning");
-            other.GetComponent<PlayerMovement>().isStunned = true;
-        }
+        //if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
+        //{
+        //    //Debug.Log(canStun);
+        //    canStun = true;
+        //}
+        //if (player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
+        //{
+        //    //Debug.Log(canStun);
+        //    canStun = true;
+        //}
+        //if (player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
+        //{
+        //    //Debug.Log(canStun);
+        //    canStun = true;
+        //}
+        //if (player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
+        //{
+        //    //Debug.Log(canStun);
+        //    canStun = true;
+        //}
+        //else
+        //{
+        //    canStun = false;
+        //}
+        ////stunning the player by pressing the "A" button
+        //if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0) && !other.CompareTag("Player01"))
+        //{
+        //    Debug.Log("stunning");
+        //    other.GetComponent<PlayerMovement>().isStunned = true;
+        //}
+        //if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0) && !other.CompareTag("Player02"))
+        //{
+        //    Debug.Log("stunning");
+        //    other.GetComponent<PlayerMovement>().isStunned = true;
+        //}
+        //if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0) && !other.CompareTag("Player03"))
+        //{
+        //    Debug.Log("stunning");
+        //    other.GetComponent<PlayerMovement>().isStunned = true;
+        //}
+        //if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0) && !other.CompareTag("Player04"))
+        //{
+        //    Debug.Log("stunning");
+        //    other.GetComponent<PlayerMovement>().isStunned = true;
+        //}
     }
 
     public bool RaycastHit()
