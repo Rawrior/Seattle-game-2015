@@ -29,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
     public float stunTimer;
     public bool canStun;
     private int rollDistance = 15;
-    private RaycastHit2D hit;
+    private RaycastHit2D JumpHit;
+    private RaycastHit2D MoveHit;
     private int LayerMask;
     //private RaycastHit2D[] rays;
 
@@ -46,19 +47,18 @@ public class PlayerMovement : MonoBehaviour
 
 	    LayerMask = 1 << 8;
 	    LayerMask = ~LayerMask;
-	    //rays[0] = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.5f, 0), Vector2.down, 0.1f);
-	    //rays[1] = Physics2D.Raycast(transform.position + new Vector3(0, -0.5f, 0), Vector2.down, 0.1f);
-	    //rays[2] = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.5f, 0), Vector2.down, 0.1f);
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-         //hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
-        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f);
-        Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f);
-        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f);
-        //Debug.Log(RaycastHit());
+         //JumpHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
+        Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
+        Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
+        Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
+        //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.3f, Color.blue);
+        //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.3f, Color.blue);
+        //Debug.Log(JumpRaycastHit());
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
         if (isStunned == true)
@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     void movement(string horizontal)
     {
         //checks if you're tolling or stunned, and if not, you can move horizontaly
-        if (( rolling == false | rollTimer >= 0.3f) && isStunned == false)
+        if (( rolling == false | rollTimer >= 0.3f) && isStunned == false && MoveRaycastHit(Horizontal))
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   
@@ -164,13 +164,12 @@ public class PlayerMovement : MonoBehaviour
 
     void RaycastMethod()
     {
-        if (RaycastHit())
+        if (JumpRaycastHit() && JumpHit.collider.gameObject.tag != "Arrow")
         {
-            //Debug.Log(hit.collider.gameObject.tag);
             airborne = false;
             jumpDuration = 0;
         }
-        else if (!RaycastHit())
+        else if (!JumpRaycastHit())
         {
             airborne = true;
         }
@@ -194,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Pick up arrows
-        if (other.CompareTag("Arrow") && GetComponentInChildren<ShootScript>().ArrowCount < 3 && other.GetComponent<ArrowBehavior>().CanKill == false)
+        if (other.CompareTag("Arrow") && GetComponentInChildren<ShootScript>().ArrowCount < 3 && other.GetComponent<ArrowBehavior>().UsedArrow == true)
         {
             Debug.Log("Picked up an arrow");
             GetComponentInChildren<ShootScript>().ArrowCount++;
@@ -295,26 +294,46 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool RaycastHit()
+    public bool JumpRaycastHit()
     {
         if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask) /*rays[0]*/)
         {
-            hit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
+            JumpHit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else if (Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            hit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
+            JumpHit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else if (Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            hit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
+            JumpHit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    public bool MoveRaycastHit(string horizontal)
+    {
+        if (Input.GetAxis(Horizontal) > 0 && Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask))
+        {
+            Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
+            MoveHit = Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask);
+            return false;
+        }
+        else if (Input.GetAxis(Horizontal) < 0 && Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask))
+        { 
+            Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
+            MoveHit = Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask);
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }
