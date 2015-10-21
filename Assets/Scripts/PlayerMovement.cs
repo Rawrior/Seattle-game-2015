@@ -92,8 +92,10 @@ public class PlayerMovement : MonoBehaviour
         //Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
         //Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
         //Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.3f, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.3f, Color.blue);
+        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
+        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
+        Debug.DrawRay(transform.position, Vector2.right * 0.4f, Color.red);
+        Debug.DrawRay(transform.position, Vector2.left * 0.4f, Color.red);
         //Debug.Log(JumpRaycastHit());
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
@@ -154,7 +156,6 @@ public class PlayerMovement : MonoBehaviour
         //checks if you're tolling or stunned, and if not, you can move horizontaly
         if ((RollCooldown == false || RollTimer >= 0.3f) && MoveRaycastHit())
         {
-            Debug.Log("Can move");
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   
     }
@@ -412,7 +413,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool RollRaycastHit()
     {
-        if (RollingRight && Physics2D.Raycast(transform.position, Vector2.right, 04f, LayerMask))
+        if (RollingRight && Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask))
         {
             RollHit = Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask);
             return false;
