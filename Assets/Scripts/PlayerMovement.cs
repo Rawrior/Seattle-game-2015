@@ -70,15 +70,15 @@ public class PlayerMovement : MonoBehaviour
             isStunned = false;
             stunTimer = 0;
         }
-        if (haveTouchedWall == true)
+        if (haveTouchedWall)
         {
             wallJumpTimer += Time.deltaTime;
         }
-        if (rolling == true)
+        if (rolling)
         {
             rollTimer += Time.deltaTime;
         }
-        if ( rolling == true && rollTimer >= 1)
+        if (rollTimer >= 1)
         {
             rollTimer = 0;
             rolling = false;
