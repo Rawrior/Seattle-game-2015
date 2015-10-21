@@ -76,8 +76,8 @@ public class PlayerMovement : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update ()
-    {
-        spawnCampProtection += Time.deltaTime;
+	{
+	    spawnCampProtection += Time.deltaTime;
         if (spawnCampProtection <= 2f)
         {
             GetComponentInChildren<SpriteRenderer>().enabled = true;
@@ -88,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             enableIframes = false;
         }
+
          //JumpHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
         //Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
         //Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
@@ -149,6 +150,8 @@ public class PlayerMovement : MonoBehaviour
         wallJump();
         RaycastMethod();
         IFrames();
+
+        Debug.Log(GetComponent<BoxCollider2D>().isTrigger);
 	}
 
     void movement(string horizontal)
@@ -277,17 +280,20 @@ public class PlayerMovement : MonoBehaviour
         //if you then were able to roll, this code will roll you in the direction you pressed the triger.
         if (RollingLeft && RollRaycastHit())
         {
+            GetComponent<BoxCollider2D>().isTrigger = false;
             transform.Translate(new Vector2(-rollDistance, 0) * Time.deltaTime);
         }
         
         if (RollingRight && RollRaycastHit())
         {
+            GetComponent<BoxCollider2D>().isTrigger = false;
             transform.Translate(new Vector2(rollDistance, 0) * Time.deltaTime);
         }
         
         //this prevents you from holding the button down to keep RollCooldown. and also determins the length of your roll.
         if (RollTimer >= 0.1f)
         {
+            GetComponent<BoxCollider2D>().isTrigger = true;
             RollingLeft = false;
             RollingRight = false;
         }
@@ -356,6 +362,18 @@ public class PlayerMovement : MonoBehaviour
         //}
     }
 
+        void IFrames()
+    {
+        if (enableIframes == true)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        else if (enableIframes == false)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+    }
+
     public bool JumpRaycastHit()
     {
         if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask) /*rays[0]*/)
@@ -396,18 +414,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             return true;
-        }
-    }
-
-    void IFrames()
-    {
-        if (enableIframes == true)
-        {
-            GetComponent<BoxCollider2D>().isTrigger = false;
-        }
-        else if (enableIframes == false)
-        {
-            GetComponent<BoxCollider2D>().isTrigger = true;
         }
     }
 
