@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private int LayerMask;
     //private RaycastHit2D[] rays;
     public float spawnCampProtection;
+    public bool enableIframes;
 
     public string Horizontal;
 	// Use this for initialization
@@ -77,11 +78,13 @@ public class PlayerMovement : MonoBehaviour
         spawnCampProtection += Time.deltaTime;
         if (spawnCampProtection <= 2f)
         {
-            GetComponent<BoxCollider2D>().isTrigger = false;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            enableIframes = true;
         }
         else if (spawnCampProtection >= 2f)
         {
-            GetComponent<BoxCollider2D>().isTrigger = true;
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            enableIframes = false;
         }
          //JumpHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
         Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
@@ -140,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         Roll(rollLeft, rollRight);
         wallJump();
         RaycastMethod();
+        IFrames();
 	}
 
     void movement(string horizontal)
@@ -384,4 +388,17 @@ public class PlayerMovement : MonoBehaviour
             return true;
         }
     }
+
+    void IFrames()
+    {
+        if (enableIframes == true)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        else if (enableIframes == false)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+    }
+
 }
