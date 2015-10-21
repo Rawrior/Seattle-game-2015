@@ -19,15 +19,16 @@ public class UpperAnimController : MonoBehaviour
     {
 		arrowCount = GetComponentInParent<ShootScript>().ArrowCount;
         StateChange(ShootButton, arrowCount);
+
 	}
 
     void StateChange(string shootButton, int arrows)
     {
-        if (Input.GetButton(shootButton) && arrows > 0)
+        if (Input.GetButton(shootButton) && arrows > 0 && GetComponentInParent<PlayerMovement>().enableIframes == false)
         {
             Animator.SetInteger("state", 1);
         }
-        else if (Input.GetButton(shootButton) && arrows == 0)
+        else if ((Input.GetButton(shootButton) && arrows == 0) && GetComponentInParent<PlayerMovement>().enableIframes == false)
         {
             Animator.SetInteger("state", 2);
         }
