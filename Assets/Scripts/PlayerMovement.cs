@@ -3,22 +3,22 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool player1Playing = false;
-    public bool player2Playing = false;
-    public bool player3Playing = false;
-    public bool player4Playing = false;
-    public string playerPlaying;
+    private bool Player1Playing;
+    private bool Player2Playing;
+    private bool Player3Playing;
+    private bool Player4Playing;
+    private string PlayerPlaying;
     public float jumpDuration;
     public float jumpHight = 3.5f;
     public float jumpSpeed;
-    public bool airborne;
+    public bool Airborne;
     public float jumpTime;
-    public string rollLeft;
-    public string rollRight;
-    public float rollTimer;
-    public bool rolling;
-    public bool rollingLeft;
-    public bool rollingRight;
+    public string RollLeft;
+    //public string RollRight;
+    public float RollTimer;
+    public bool RollCooldown;
+    public bool RollingLeft;
+    public bool RollingRight;
     public bool canWallJump;
     public int wallJumpHeight = 10;
     public int moveSpeed = 10;
@@ -31,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private int rollDistance = 15;
     private RaycastHit2D JumpHit;
     private RaycastHit2D MoveHit;
-    private int LayerMask;
+    private RaycastHit2D RollHit;
+    public LayerMask LayerMask;
     //private RaycastHit2D[] rays;
     public float spawnCampProtection;
     public bool enableIframes;
@@ -42,8 +43,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (gameObject.tag == "Player0" + tag[gameObject.tag.Length - 1])
         {
-            playerPlaying = "Player0" + tag[gameObject.tag.Length - 1];
+            PlayerPlaying = "Player0" + tag[gameObject.tag.Length - 1];
         }
+<<<<<<< HEAD
         //if (playerPlaying == "Player01")
         //{
         //    player1Playing = true;
@@ -61,20 +63,39 @@ public class PlayerMovement : MonoBehaviour
         //    player4Playing = true;
         //}
         Debug.Log(playerPlaying);
+=======
+        if (PlayerPlaying == "Player01")
+        {
+            Player1Playing = true;
+        }
+        if (PlayerPlaying == "Player02")
+        {
+            Player2Playing = true;
+        }
+        if (PlayerPlaying == "Player03")
+        {
+            Player3Playing = true;
+        }
+        if (PlayerPlaying == "Player04")
+        {
+            Player4Playing = true;
+        }
+        Debug.Log(PlayerPlaying);
+>>>>>>> Simon_Develop
         jumpTime = 0.2f;
-        playerPlaying = "P" + tag[gameObject.tag.Length - 1];
+        PlayerPlaying = "P" + tag[gameObject.tag.Length - 1];
         whoIsPlaying();
         Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
-        rollLeft = "LT0" + tag[gameObject.tag.Length - 1];
-        rollRight = "RT0" + tag[gameObject.tag.Length - 1];
+        RollLeft = "LT0" + tag[gameObject.tag.Length - 1];
+        //RollRight = "RT0" + tag[gameObject.tag.Length - 1];
 
-	    LayerMask = 1 << 8;
-	    LayerMask = ~LayerMask;
+        LayerMask = ~LayerMask;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+<<<<<<< HEAD
         spawnCampProtection += Time.deltaTime;
         if (spawnCampProtection <= 2f)
         {
@@ -94,6 +115,10 @@ public class PlayerMovement : MonoBehaviour
         //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.3f, Color.blue);
         //Debug.Log(JumpRaycastHit());
 
+=======
+        Debug.DrawRay(transform.position, transform.right * 0.5f, Color.blue);
+        Debug.DrawRay(transform.position, -transform.right * 0.5f, Color.blue);
+>>>>>>> Simon_Develop
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
 
         //if (isStunned == true)
@@ -120,27 +145,28 @@ public class PlayerMovement : MonoBehaviour
         {
             wallJumpTimer += Time.deltaTime;
         }
-        if (rolling)
+        if (RollCooldown)
         {
-            rollTimer += Time.deltaTime;
+            RollTimer += Time.deltaTime;
         }
-        if (rollTimer >= 1)
+        if (RollTimer >= 1)
         {
-            rollTimer = 0;
-            rolling = false;
+            RollTimer = 0;
+            RollCooldown = false;
         }
-        if (airborne == true)
+        if (Airborne == true)
         {
             moveSpeed = 3;
             jumpDuration += Time.deltaTime;
         }
-        if (airborne == false)
+        if (Airborne == false)
         {
             moveSpeed = 5;
         }
         Jump();
         movement(Horizontal);
-        Roll(rollLeft, rollRight);
+        Roll(RollLeft);
+        //RollMethod(RollLeft, RollRight);
         wallJump();
         RaycastMethod();
         IFrames();
@@ -150,11 +176,15 @@ public class PlayerMovement : MonoBehaviour
     {
 
         //checks if you're tolling or stunned, and if not, you can move horizontaly
+<<<<<<< HEAD
         if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false¨*/ && MoveRaycastHit(Horizontal))
 
         //checks if you're rolling or stunned, and if not, you can move horizontaly
         if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false*/)
 
+=======
+        if (( RollCooldown == false | RollTimer >= 0.1f) && isStunned == false && MoveRaycastHit())
+>>>>>>> Simon_Develop
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   
@@ -163,28 +193,28 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         //adds velocity to the current playing player to give it a jump.
-        if ((airborne == false && player1Playing == true) && (Input.GetKeyDown(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((Airborne == false && Player1Playing == true) && (Input.GetKeyDown(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
         {
             jumpSpeed = 12f;
-            //airborne = true;
+            Airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
-        if ((airborne == false && player2Playing == true) && (Input.GetKeyDown(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((Airborne == false && Player2Playing == true) && (Input.GetKeyDown(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
         {
             jumpSpeed = 12f;
-            airborne = true;
+            Airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
-        if ((airborne == false && player3Playing == true) && (Input.GetKeyDown(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((Airborne == false && Player3Playing == true) && (Input.GetKeyDown(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
         {
             jumpSpeed = 12f;
-            airborne = true;
+            Airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
-        if ((airborne == false && player4Playing == true) && (Input.GetKeyDown(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (rolling == false | rollTimer >= 0.3f))
+        if ((Airborne == false && Player4Playing == true) && (Input.GetKeyDown(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
         {
             jumpSpeed = 12f;
-            airborne = true;
+            Airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
         }
         else
@@ -196,47 +226,47 @@ public class PlayerMovement : MonoBehaviour
     void whoIsPlaying()
     {
         //checking what player is currently playing.
-        if (playerPlaying == "P1")
+        if (PlayerPlaying == "P1")
         {
-            player1Playing = true;
+            Player1Playing = true;
         }
-        if (playerPlaying == "P2")
+        if (PlayerPlaying == "P2")
         {
-            player2Playing = true;
+            Player2Playing = true;
         }
-        if (playerPlaying == "P3")
+        if (PlayerPlaying == "P3")
         {
-            player3Playing = true;
+            Player3Playing = true;
         }
-        if (playerPlaying == "P4")
+        if (PlayerPlaying == "P4")
         {
-            player4Playing = true;
+            Player4Playing = true;
         }
     }
 
     void RaycastMethod()
     {
-        if (JumpRaycastHit() && JumpHit.collider.gameObject.tag != "Arrow")
+        if (JumpRaycastHit()/* && JumpHit.collider.gameObject.tag != "Arrow"*/)
         {
-            airborne = false;
+            Airborne = false;
             jumpDuration = 0;
         }
         else if (!JumpRaycastHit())
         {
-            airborne = true;
+            Airborne = true;
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         //checking if you're grounded and touching a wall for elighability to do a walljump
-        if (other.CompareTag("Wall") && airborne == true)
+        if (other.CompareTag("Wall") && Airborne == true)
         {
             haveTouchedWall = true;
             canWallJump = true;
         }
         //returns false peramiters so you will be unable to walljump when standing on the ground.
-        if (other.CompareTag("Ground") && airborne == false)
+        if (other.CompareTag("Ground") && Airborne == false)
         {
             haveTouchedWall = false;
             wallJumpTimer = 0;
@@ -253,41 +283,50 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Roll(string rollDirectionLeft, string rollDirectionRight)
+    void RollMethod(string rollLeft, string rollRight)
+    {
+        //if (!Airborne && Input.GetAxis(rollLeft) >= 0.1f && RollTimer <= 0.05f && )
+    }
+
+    void Roll(string rollDirectionLeft)
     {
         //in here we are making a rollfunction when you click the right and left trigger on an xbox 360 controller.
-        //first we check if you are allowed to perform a roll, turning false if you're already rolling,  are in the air, or have rolled within the last second.
-        if (airborne == false && Input.GetAxis(rollDirectionLeft) >= 0.1f && rollTimer <= 0.05f && rolling == false && rollingRight == false)
+        //first we check if you are allowed to perform a roll, turning false if you're already RollCooldown,  are in the air, or have rolled within the last second.
+        if (!Airborne && Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
-            rollingLeft = true;
-            rolling = true;
+            RollingLeft = true;
+            RollCooldown = true;
         }
-        if (airborne == false && Input.GetAxis(rollDirectionLeft) * -1 >= 0.1f && rollTimer <= 0.05f && rolling == false && rollingLeft == false)
+        
+        if (!Airborne && -Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
-            rollingRight = true;
-            rolling = true;
+            RollingRight = true;
+            RollCooldown = true;
         }
-        //iif you then were able to roll, this code will roll you in the direction you pressed the triger.
-        if (rolling == true && rollingLeft == true)
+
+        //if you then were able to roll, this code will roll you in the direction you pressed the triger.
+        if (RollingLeft && RollRaycastHit())
         {
             transform.Translate(new Vector2(-rollDistance, 0) * Time.deltaTime);
         }
-        if (rolling == true && rollingRight == true)
+        
+        if (RollingRight && RollRaycastHit())
         {
-            transform.Translate(new Vector2(rollDistance, 0)* Time.deltaTime);
+            transform.Translate(new Vector2(rollDistance, 0) * Time.deltaTime);
         }
-        //this prevents you from holding the button down to keep rolling. and also determins the length of your roll.
-        if (rollTimer >= 0.1f)
+        
+        //this prevents you from holding the button down to keep RollCooldown. and also determins the length of your roll.
+        if (RollTimer >= 0.1f)
         {
-            rollingLeft = false;
-            rollingRight = false;
+            RollingLeft = false;
+            RollingRight = false;
         }
     }
 
     void wallJump()
     {
         //If you've touched the wall you have 0.2 seconds to perfom a walljump, increasing you velocity to shoot you upwards and towards the other sida than the wall.
-        if (airborne == true && canWallJump == true && player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
+        if (Airborne == true && canWallJump == true && Player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
         {
             haveIWallJumped = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 10));
@@ -299,6 +338,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(other);
         //checking if you're touching the correct player and returning canStun as true so you can stun the other player.
         //Debug.Log(other);
+<<<<<<< HEAD
         //if (player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
         //{
         //    //Debug.Log(canStun);
@@ -344,6 +384,53 @@ public class PlayerMovement : MonoBehaviour
         //    Debug.Log("stunning");
         //    other.GetComponent<PlayerMovement>().isStunned = true;
         //}
+=======
+        if (Player1Playing == true && other.CompareTag("Player02") || other.CompareTag("Player03") || other.CompareTag("Player04"))
+        {
+            //Debug.Log(canStun);
+            canStun = true;
+        }
+        if (Player2Playing == true && other.CompareTag("Player01") || other.CompareTag("Player03") || other.CompareTag("Player04"))
+        {
+            //Debug.Log(canStun);
+            canStun = true;
+        }
+        if (Player3Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player04"))
+        {
+            //Debug.Log(canStun);
+            canStun = true;
+        }
+        if (Player4Playing == true && other.CompareTag("Player01") || other.CompareTag("Player02") || other.CompareTag("Player03"))
+        {
+            //Debug.Log(canStun);
+            canStun = true;
+        }
+        else
+        {
+            canStun = false;
+        }
+        //stunning the player by pressing the "A" button
+        if (canStun == true && Input.GetKey(KeyCode.Joystick1Button0) && !other.CompareTag("Player01"))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+        if (canStun == true && Input.GetKey(KeyCode.Joystick2Button0) && !other.CompareTag("Player02"))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+        if (canStun == true && Input.GetKey(KeyCode.Joystick3Button0) && !other.CompareTag("Player03"))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+        if (canStun == true && Input.GetKey(KeyCode.Joystick4Button0) && !other.CompareTag("Player04"))
+        {
+            Debug.Log("stunning");
+            other.GetComponent<PlayerMovement>().isStunned = true;
+        }
+>>>>>>> Simon_Develop
     }
 
     public bool JumpRaycastHit()
@@ -369,17 +456,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool MoveRaycastHit(string horizontal)
+    public bool MoveRaycastHit()
     {
         if (Input.GetAxis(Horizontal) > 0 && Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask))
         {
-            Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
+            //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
             MoveHit = Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask);
             return false;
         }
         else if (Input.GetAxis(Horizontal) < 0 && Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask))
         { 
-            Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
+            //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
             MoveHit = Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask);
             return false;
         }
@@ -389,6 +476,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     void IFrames()
     {
         if (enableIframes == true)
@@ -401,4 +489,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+=======
+    public bool RollRaycastHit()
+    {
+        if (RollingRight && Physics2D.Raycast(transform.position, Vector2.right, 045f, LayerMask))
+        {
+            RollHit = Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask);
+            return false;
+        }
+        else if (RollingLeft && Physics2D.Raycast(transform.position, Vector2.left, 0.4f, LayerMask))
+        { 
+            RollHit = Physics2D.Raycast(transform.position, Vector2.left, 0.4f, LayerMask);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+>>>>>>> Simon_Develop
 }
