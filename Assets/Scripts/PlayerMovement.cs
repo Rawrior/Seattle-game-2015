@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit2D MoveHit;
     private int LayerMask;
     //private RaycastHit2D[] rays;
+    public float spawnCampProtection;
 
     public string Horizontal;
 	// Use this for initialization
@@ -73,6 +74,15 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        spawnCampProtection += Time.deltaTime;
+        if (spawnCampProtection <= 2f)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        else if (spawnCampProtection >= 2f)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
          //JumpHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
         Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
         Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
@@ -82,18 +92,18 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(JumpRaycastHit());
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
-<<<<<<< HEAD
-        if (isStunned == true)
-        {
-            stunTimer += Time.deltaTime;
-        }
-        if (stunTimer >= 2f)
-        {
-            isStunned = false;
-            stunTimer = 0;
-        }
-        if (haveTouchedWall)
-=======
+
+        //if (isStunned == true)
+        //{
+        //    stunTimer += Time.deltaTime;
+        //}
+        //if (stunTimer >= 2f)
+        //{
+        //    isStunned = false;
+        //    stunTimer = 0;
+        //}
+        //if (haveTouchedWall)
+
         //if (isStunned == true)
         //{
         //    stunTimer += Time.deltaTime;
@@ -104,7 +114,6 @@ public class PlayerMovement : MonoBehaviour
         //    stunTimer = 0;
         //}
         if (haveTouchedWall == true)
->>>>>>> Runes_Scripots
         {
             wallJumpTimer += Time.deltaTime;
         }
@@ -135,13 +144,13 @@ public class PlayerMovement : MonoBehaviour
 
     void movement(string horizontal)
     {
-<<<<<<< HEAD
+
         //checks if you're tolling or stunned, and if not, you can move horizontaly
-        if (( rolling == false | rollTimer >= 0.3f) && isStunned == false && MoveRaycastHit(Horizontal))
-=======
+        if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false¨*/ && MoveRaycastHit(Horizontal))
+
         //checks if you're rolling or stunned, and if not, you can move horizontaly
         if (( rolling == false | rollTimer >= 0.3f) /*&& isStunned == false*/)
->>>>>>> Runes_Scripots
+
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   

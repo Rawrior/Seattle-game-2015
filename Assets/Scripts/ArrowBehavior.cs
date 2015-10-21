@@ -66,7 +66,7 @@ public class ArrowBehavior : MonoBehaviour
         //Check if the collider has any of the tags in the ignore list.
         //This will be Ground, Wall and the player that shot the arrow.
         //Also check if the arrow can kill. Default is true.
-        if (!IgnoreTags.Contains(other.tag) && CanKill)
+        if (!IgnoreTags.Contains(other.tag) && CanKill && other.GetComponent<BoxCollider2D>().isTrigger == true)
         {
             if (other.CompareTag("Player01") && UsedArrow == false)
             {
