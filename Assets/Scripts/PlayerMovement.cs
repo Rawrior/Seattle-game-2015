@@ -77,6 +77,10 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if (enableIframes == true)
+        {
+            GetComponentInChildren<ShootScript>().ChargeTime = 0;
+        }
 
          //JumpHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f);
         //Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);

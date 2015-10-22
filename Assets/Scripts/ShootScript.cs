@@ -13,7 +13,7 @@ public class ShootScript : MonoBehaviour
     private string Fire;
 
     //Defines how long the player has been charging, in seconds.
-    private float ChargeTime;
+    public float ChargeTime;
 
     //The object to shoot out from the player.
     public GameObject ArrowObject;
