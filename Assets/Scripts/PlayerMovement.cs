@@ -3,17 +3,14 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private bool Player1Playing;
-    private bool Player2Playing;
-    private bool Player3Playing;
-    private bool Player4Playing;
-    private string PlayerPlaying;
+    //private string PlayerPlaying;
     public float jumpDuration;
     public float jumpHight = 3.5f;
     public float jumpSpeed;
     public bool Airborne;
     public float jumpTime;
-    public string RollLeft;
+    public float wallJumpDirection;
+
     //public string RollRight;
     public float RollTimer;
     public bool RollCooldown;
@@ -22,55 +19,35 @@ public class PlayerMovement : MonoBehaviour
     public bool canWallJump;
     public int wallJumpHeight = 10;
     public int moveSpeed = 10;
-    public bool haveIWallJumped = false;
+    public bool HasWallJumped;
     public float wallJumpTimer;
-    public bool haveTouchedWall = false;
+    public bool haveTouchedWall;
     //public bool isStunned = false;
     //public float stunTimer;
     //public bool canStun;
     private int rollDistance = 15;
-    private RaycastHit2D JumpHit;
-    private RaycastHit2D MoveHit;
-    private RaycastHit2D RollHit;
+    //private RaycastHit2D JumpHit;
+    //private RaycastHit2D MoveHit;
+    //private RaycastHit2D RollHit;
     public LayerMask LayerMask;
     //private RaycastHit2D[] rays;
     public float spawnCampProtection;
     public bool enableIframes;
 
     public string Horizontal;
-	// Use this for initialization
+    public string Jump;
+    public string RollLeft;
+	
+    // Use this for initialization
 	void Start ()
     {
-        if (gameObject.tag == "Player0" + tag[gameObject.tag.Length - 1])
-        {
-            PlayerPlaying = "Player0" + tag[gameObject.tag.Length - 1];
-        }
-
-        if (PlayerPlaying == "Player01")
-        {
-            Player1Playing = true;
-        }
-        if (PlayerPlaying == "Player02")
-        {
-            Player2Playing = true;
-        }
-        if (PlayerPlaying == "Player03")
-        {
-            Player3Playing = true;
-        }
-        if (PlayerPlaying == "Player04")
-        {
-            Player4Playing = true;
-        }
-        Debug.Log(PlayerPlaying);
-
         jumpTime = 0.2f;
-        PlayerPlaying = "P" + tag[gameObject.tag.Length - 1];
-        whoIsPlaying();
+	    jumpSpeed = 12f;
+
         Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
         RollLeft = "LT0" + tag[gameObject.tag.Length - 1];
+	    Jump = "Jump0" + tag[gameObject.tag.Length - 1];
         //RollRight = "RT0" + tag[gameObject.tag.Length - 1];
-
         LayerMask = ~LayerMask;
     }
 	
@@ -86,34 +63,13 @@ public class PlayerMovement : MonoBehaviour
         //Debug.DrawRay(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
         //Debug.DrawRay(transform.position + new Vector3(0,-0.4f,0), Vector2.down * 0.3f, Color.blue);
         //Debug.DrawRay(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down * 0.3f, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
-        Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
-        Debug.DrawRay(transform.position, Vector2.right * 0.4f, Color.red);
-        Debug.DrawRay(transform.position, Vector2.left * 0.4f, Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
+        //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
+        Debug.DrawRay(transform.position, Vector2.right * 0.3f, Color.red);
+        Debug.DrawRay(transform.position, Vector2.left * 0.3f, Color.red);
         //Debug.Log(JumpRaycastHit());
 
         //in update we have all our methods placed, and also a lot of different timers that start and stop individually and is controlled by Time.deltaTime
-
-        //if (isStunned == true)
-        //{
-        //    stunTimer += Time.deltaTime;
-        //}
-        //if (stunTimer >= 2f)
-        //{
-        //    isStunned = false;
-        //    stunTimer = 0;
-        //}
-        //if (haveTouchedWall)
-
-        //if (isStunned == true)
-        //{
-        //    stunTimer += Time.deltaTime;
-        //}
-        //if (stunTimer >= 2f)
-        //{
-        //    isStunned = false;
-        //    stunTimer = 0;
-        //}
         if (haveTouchedWall == true)
         {
             wallJumpTimer += Time.deltaTime;
@@ -136,11 +92,13 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed = 5;
         }
-        Jump();
+
+        
         movement(Horizontal);
         Roll(RollLeft);
         //RollMethod(RollLeft, RollRight);
         wallJump();
+        JumpMethod(Jump);
         RaycastMethod();
         IFrames();
 
@@ -149,7 +107,14 @@ public class PlayerMovement : MonoBehaviour
 	        SpawnCampMethod();   
 	    }
 
-        //Debug.Log(enableIframes);
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector3.left*0.3f);
+        Debug.DrawRay(transform.position + new Vector3(0, -0.5f, 0), Vector3.left*0.3f);
+        Debug.DrawRay(transform.position + new Vector3(-0.3f, 0.5f, 0), Vector3.down*1);
+
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), Vector3.right * 0.3f);
+        Debug.DrawRay(transform.position + new Vector3(0, -0.5f, 0), Vector3.right * 0.3f);
+        Debug.DrawRay(transform.position + new Vector3(0.3f, 0.5f, 0), Vector3.down * 1);
+
 	}
 
     void movement(string horizontal)
@@ -161,57 +126,14 @@ public class PlayerMovement : MonoBehaviour
         }   
     }
 
-    void Jump()
+    void JumpMethod(string JumpButton)
     {
         //adds velocity to the current playing player to give it a jump.
-        if ((Airborne == false && Player1Playing == true) && (Input.GetKeyDown(KeyCode.Joystick1Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
+        if (Airborne == false && Input.GetButtonDown(JumpButton) && jumpDuration <= jumpTime && !RollCooldown)
         {
-            jumpSpeed = 12f;
+            Debug.Log("Jumping");
             Airborne = true;
             GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-        }
-        if ((Airborne == false && Player2Playing == true) && (Input.GetKeyDown(KeyCode.Joystick2Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
-        {
-            jumpSpeed = 12f;
-            Airborne = true;
-            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-        }
-        if ((Airborne == false && Player3Playing == true) && (Input.GetKeyDown(KeyCode.Joystick3Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
-        {
-            jumpSpeed = 12f;
-            Airborne = true;
-            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-        }
-        if ((Airborne == false && Player4Playing == true) && (Input.GetKeyDown(KeyCode.Joystick4Button4)) && jumpDuration <= jumpTime && (RollCooldown == false | RollTimer >= 0.3f))
-        {
-            jumpSpeed = 12f;
-            Airborne = true;
-            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, jumpSpeed));
-        }
-        else
-        {
-            jumpSpeed = 0;
-        }
-    }
-
-    void whoIsPlaying()
-    {
-        //checking what player is currently playing.
-        if (PlayerPlaying == "P1")
-        {
-            Player1Playing = true;
-        }
-        if (PlayerPlaying == "P2")
-        {
-            Player2Playing = true;
-        }
-        if (PlayerPlaying == "P3")
-        {
-            Player3Playing = true;
-        }
-        if (PlayerPlaying == "P4")
-        {
-            Player4Playing = true;
         }
     }
 
@@ -231,17 +153,17 @@ public class PlayerMovement : MonoBehaviour
         void OnTriggerEnter2D(Collider2D other)
     {
         //checking if you're grounded and touching a wall for elighability to do a walljump
-        if (other.CompareTag("Wall") && Airborne == true)
-        {
-            haveTouchedWall = true;
-            canWallJump = true;
-        }
+        //if (other.CompareTag("Wall") && Airborne == true)
+        //{
+        //    haveTouchedWall = true;
+        //    canWallJump = true;
+        //}
         //returns false peramiters so you will be unable to walljump when standing on the ground.
         if (other.CompareTag("Ground") && Airborne == false)
         {
             haveTouchedWall = false;
             wallJumpTimer = 0;
-            haveIWallJumped = false;
+            HasWallJumped = false;
             canWallJump = false;
         }
 
@@ -254,10 +176,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void RollMethod(string rollLeft, string rollRight)
-    {
-        //if (!Airborne && Input.GetAxis(rollLeft) >= 0.1f && RollTimer <= 0.05f && )
-    }
 
     void Roll(string rollDirectionLeft)
     {
@@ -300,10 +218,12 @@ public class PlayerMovement : MonoBehaviour
     void wallJump()
     {
         //If you've touched the wall you have 0.2 seconds to perfom a walljump, increasing you velocity to shoot you upwards and towards the other sida than the wall.
-        if (Airborne == true && canWallJump == true && Player1Playing == true && Input.GetKeyDown(KeyCode.Joystick1Button4) && haveIWallJumped == false && wallJumpTimer <= 0.2f)
+        if (Airborne && WallRaycastHit() && Input.GetButtonDown(Jump) && !HasWallJumped)
         {
-            haveIWallJumped = true;
-            GetComponent<Rigidbody2D>().velocity = (new Vector2(0, 10));
+            Debug.Log("Walljumping");
+            HasWallJumped = true;
+            GetComponent<Rigidbody2D>().velocity = (new Vector2(wallJumpDirection, 12));
+            //GetComponent<Rigidbody2D>().AddForce(new Vector2(wallJumpDirection,0), ForceMode2D.Impulse);
         }
     }
     
@@ -386,21 +306,22 @@ public class PlayerMovement : MonoBehaviour
             enableIframes = false;
         }
     }
+
     public bool JumpRaycastHit()
     {
-        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask) /*rays[0]*/)
+        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            JumpHit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
+            //JumpHit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else if (Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            JumpHit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
+            //JumpHit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else if (Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
-            JumpHit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
+            //JumpHit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
         else
@@ -414,13 +335,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxis(Horizontal) > 0 && Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask))
         {
             //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.right * 0.25f, Color.blue);
-            MoveHit = Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask);
+            //MoveHit = Physics2D.Raycast(transform.position, Vector2.right, 0.25f, LayerMask);
             return false;
         }
         else if (Input.GetAxis(Horizontal) < 0 && Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask))
         { 
             //Debug.DrawRay(transform.position + new Vector3(0, -0.1f, 0), Vector2.left * 0.25f, Color.blue);
-            MoveHit = Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask);
+            //MoveHit = Physics2D.Raycast(transform.position, Vector2.left, 0.25f, LayerMask);
             return false;
         }
         else
@@ -429,23 +350,60 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-
     public bool RollRaycastHit()
     {
         if (RollingRight && Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask))
         {
-            RollHit = Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask);
+            //RollHit = Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask);
             return false;
         }
         else if (RollingLeft && Physics2D.Raycast(transform.position, Vector2.left, 0.4f, LayerMask))
         { 
-            RollHit = Physics2D.Raycast(transform.position, Vector2.left, 0.4f, LayerMask);
+            //RollHit = Physics2D.Raycast(transform.position, Vector2.left, 0.4f, LayerMask);
             return false;
         }
         else
         {
             return true;
         }
+    }
+
+    public bool WallRaycastHit()
+    {
+        if (Airborne)
+        {
+            
+            if (Physics2D.BoxCast(transform.position, new Vector2(0.3f, 1), 0, Vector2.right,0.3f,LayerMask))
+            {
+                wallJumpTimer += Time.deltaTime;
+                wallJumpDirection = -5;
+                return true;
+            }
+            else if (Physics2D.BoxCast(transform.position, new Vector2(0.3f, 1), 0, Vector2.left, 0.3f, LayerMask))
+            {
+
+                wallJumpTimer += Time.deltaTime;
+                wallJumpDirection = 5;
+                return true;
+            }
+            else
+            {
+                wallJumpTimer = 0;
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+
+        //if (wallJumpTimer <= 0.2f)
+        //{
+        //    return true;
+        //}
+        //else
+        //{
+        //    return false;
+        //}
     }
 }

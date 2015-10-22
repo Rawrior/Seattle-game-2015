@@ -57,6 +57,10 @@ public class ArrowBehavior : MonoBehaviour
     //When a collider enters the trigger (or vice-versa. Technically not, but y'know)
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //if (!IgnoreTags.Skip(1).Contains(other.tag))
+        //{
+            //Debug.Log("Hit a player" + other.tag);
+        //}
         if (other.CompareTag("Wall") || other.CompareTag("Ground") || other.CompareTag("Roof"))
         {
             CanKill = false;
