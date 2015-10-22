@@ -78,11 +78,7 @@ public class PlayerMovement : MonoBehaviour
         {
             RollTimer += Time.deltaTime;
         }
-        if (RollTimer >= 1)
-        {
-            RollTimer = 0;
-            RollCooldown = false;
-        }
+
         if (Airborne == true)
         {
             moveSpeed = 3;
@@ -120,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
     void movement(string horizontal)
     {
         //checks if you're tolling or stunned, and if not, you can move horizontaly
-        if ((RollCooldown == false || RollTimer >= 0.3f) && MoveRaycastHit())
+        if ((RollCooldown == false || RollTimer >= 0.15f) && MoveRaycastHit())
         {
             transform.Translate(new Vector2(Input.GetAxis(horizontal), 0) * moveSpeed * Time.deltaTime);
         }   
@@ -129,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     void JumpMethod(string JumpButton)
     {
         //adds velocity to the current playing player to give it a jump.
-        if (Airborne == false && Input.GetButtonDown(JumpButton) && jumpDuration <= jumpTime && !RollCooldown)
+        if (Airborne == false && Input.GetButtonDown(JumpButton) && jumpDuration <= jumpTime)
         {
             Debug.Log("Jumping");
             Airborne = true;
@@ -181,14 +177,14 @@ public class PlayerMovement : MonoBehaviour
     {
         //in here we are making a rollfunction when you click the right and left trigger on an xbox 360 controller.
         //first we check if you are allowed to perform a roll, turning false if you're already RollCooldown,  are in the air, or have rolled within the last second.
-        if (!Airborne && Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
+        if (/*!Airborne && */Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
             enableIframes = true;
             RollingLeft = true;
             RollCooldown = true;
         }
         
-        if (!Airborne && -Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
+        if (/*!Airborne &&*/ -Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
             enableIframes = true;
             RollingRight = true;
@@ -212,6 +208,11 @@ public class PlayerMovement : MonoBehaviour
             enableIframes = false;
             RollingLeft = false;
             RollingRight = false;
+        }
+        if (RollTimer >= 1f)
+        {
+            RollTimer = 0;
+            RollCooldown = false;
         }
     }
 
@@ -309,7 +310,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool JumpRaycastHit()
     {
-        if (Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
+        if (Physics2D.Raycast(transform.position + new Vector3(0.18f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
             //JumpHit = Physics2D.Raycast(transform.position + new Vector3(0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
@@ -319,7 +320,7 @@ public class PlayerMovement : MonoBehaviour
             //JumpHit = Physics2D.Raycast(transform.position + new Vector3(0, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;
         }
-        else if (Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
+        else if (Physics2D.Raycast(transform.position + new Vector3(-0.18f, -0.4f, 0), Vector2.down, 0.3f, LayerMask))
         {
             //JumpHit = Physics2D.Raycast(transform.position + new Vector3(-0.2f, -0.4f, 0), Vector2.down, 0.3f, LayerMask);
             return true;

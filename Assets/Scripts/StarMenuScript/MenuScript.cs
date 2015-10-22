@@ -34,7 +34,7 @@ public class MenuScript : MonoBehaviour
         PlayersPlaying.player3Points = 0;
         PlayersPlaying.player4Points = 0;
         selectTimer += Time.deltaTime;
-        Debug.Log(Input.GetAxis(vertical));
+        //Debug.Log(Input.GetAxis(vertical));
 
         currentLevel = Application.loadedLevel;
         if (currentLevel == 0)
