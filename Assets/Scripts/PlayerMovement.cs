@@ -183,14 +183,20 @@ public class PlayerMovement : MonoBehaviour
         //first we check if you are allowed to perform a roll, turning false if you're already RollCooldown,  are in the air, or have rolled within the last second.
         if (!Airborne && Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
-            enableIframes = true;
+            if (spawnCampProtection >= 2)
+            {
+                enableIframes = true;
+            }
             RollingLeft = true;
             RollCooldown = true;
         }
         
         if (!Airborne && -Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
-            enableIframes = true;
+            if (spawnCampProtection >= 2)
+            {
+                enableIframes = true;
+            }
             RollingRight = true;
             RollCooldown = true;
         }
