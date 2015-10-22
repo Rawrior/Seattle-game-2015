@@ -310,8 +310,10 @@ public class PlayerMovement : MonoBehaviour
         spawnCampProtection += Time.deltaTime;
         if (spawnCampProtection <= 2f)
         {
+            
             GetComponentInChildren<SpriteRenderer>().enabled = true;
             enableIframes = true;
+            //Debug.Log("Iframes are " + enableIframes);
         }
         else if (spawnCampProtection >= 2f)
         {
