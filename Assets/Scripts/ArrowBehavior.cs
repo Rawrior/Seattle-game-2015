@@ -50,7 +50,7 @@ public class ArrowBehavior : MonoBehaviour
         {
             Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
             float angle = Mathf.Atan2(velocity.y, velocity.x)*Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.AngleAxis(angle - 180, Vector3.forward);
         }
     }
 
