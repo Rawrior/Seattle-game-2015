@@ -14,10 +14,10 @@ public class GameController : MonoBehaviour
 	void Update () 
     {
         //Reloads the level if R is pressed.
-        if (Input.GetKey(KeyCode.Joystick1Button7))
-	    {
-	        Application.LoadLevel(0);
-	    }
+        //if (Input.GetKey(KeyCode.Joystick1Button7))
+        //{
+        //    Application.LoadLevel(0);
+        //}
 
         //Quits the game if escape is pressed.
 	    if (Input.GetKeyDown(KeyCode.Escape))

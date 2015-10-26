@@ -39,10 +39,10 @@ public class RespawnControl : MonoBehaviour
             Application.LoadLevel(4);
         }
         playersToSpawn();
-        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
-        {
-            Application.LoadLevel(0);
-        }
+        //if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+        //{
+        //    Application.LoadLevel(0);
+        //}
         if (player01Dead == true)
         {
             respawnTimer01 += Time.deltaTime;
