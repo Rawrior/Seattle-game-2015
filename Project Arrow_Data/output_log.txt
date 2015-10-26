@@ -15,84 +15,24 @@ Loading C:\Users\simo173d.VID\Documents\~~SKOLETING~~\Seattle tur\Project Arrow\
 Platform assembly: C:\Users\simo173d.VID\Documents\~~SKOLETING~~\Seattle tur\Project Arrow\Project Arrow_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\simo173d.VID\Documents\~~SKOLETING~~\Seattle tur\Project Arrow\Project Arrow_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\simo173d.VID\Documents\~~SKOLETING~~\Seattle tur\Project Arrow\Project Arrow_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.053 seconds
+- Completed reload, in  0.059 seconds
 desktop: 1600x900 50Hz; virtual: 1600x900 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
 Platform assembly: C:\Users\simo173d.VID\Documents\~~SKOLETING~~\Seattle tur\Project Arrow\Project Arrow_Data\Managed\System.dll (this message is harmless)
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 4878 -> priority: 1 
-  Thread -> id: 4874 -> priority: 1 
+  Thread -> id: 12334 -> priority: 1 
+  Thread -> id: 12f04 -> priority: 1 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.355782 ms
+UnloadTime: 0.319007 ms
 
-Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 191.
-Total: 0.118451 ms (FindLiveObjects: 0.008980 ms CreateObjectMapping: 0.011118 ms MarkObjects: 0.085524 ms  DeleteObjects: 0.012401 ms)
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 192.
+Total: 0.181740 ms (FindLiveObjects: 0.028223 ms CreateObjectMapping: 0.025657 ms MarkObjects: 0.115030 ms  DeleteObjects: 0.011973 ms)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.292922 ms
+UnloadTime: 0.302757 ms
 
-Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 474.
-Total: 0.217660 ms (FindLiveObjects: 0.020525 ms CreateObjectMapping: 0.017104 ms MarkObjects: 0.165917 ms  DeleteObjects: 0.013683 ms)
-
-Jumping
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Jumping
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Shot an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Shot an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Picked up an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Picked up an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Shot an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Shot an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Picked up an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Picked up an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Jumping
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Jumping
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Shot an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Shot an arrow
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 64)
-
-Joystick disconnected ("Controller (Xbox 360 Wireless Receiver for Windows)").
- 
-(Filename:  Line: 714)
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 1569.
+Total: 0.373315 ms (FindLiveObjects: 0.111609 ms CreateObjectMapping: 0.023091 ms MarkObjects: 0.224502 ms  DeleteObjects: 0.013683 ms)
 
