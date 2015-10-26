@@ -23,6 +23,8 @@ public class ShootScript : MonoBehaviour
 
     //The amount of arrows the player has.
     public int ArrowCount;
+
+    public Material TrailMaterial;
     
     //---------
     //Scripting
@@ -79,8 +81,9 @@ public class ShootScript : MonoBehaviour
             if (ChargeTime > ChargeThreshold && ArrowCount > 0)
             {
                 //Spawns the arrow at the edge of the bow and with current rotation.
-                Debug.Log("Shot an arrow");
+                //Debug.Log("Shot an arrow");
                 GameObject arrowObject = (GameObject)Instantiate(arrow, transform.position + -transform.right * 0.5f, transform.rotation);
+                arrowObject.GetComponentInChildren<TrailRenderer>().material = TrailMaterial;
 
                 //Sets the Arrow's last tag to ignore to the player's current tag.
                 arrowObject.GetComponent<ArrowBehavior>().IgnoreTags[0] = "Player0" + tag[gameObject.tag.Length - 1];
@@ -104,7 +107,7 @@ public class ShootScript : MonoBehaviour
     {
         if (other.CompareTag("Arrow") && ArrowCount < 3 && other.GetComponent<ArrowBehavior>().CanKill == false)
         {
-            Debug.Log("Picked up an arrow");
+            //Debug.Log("Picked up an arrow");
             ArrowCount++;
             Destroy(other.gameObject);
         }
