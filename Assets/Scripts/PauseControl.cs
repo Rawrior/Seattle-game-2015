@@ -17,7 +17,7 @@ public class PauseControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log(Time.timeScale);
+        //Debug.Log(Time.timeScale);
         PauseMethod();
 	}
 
