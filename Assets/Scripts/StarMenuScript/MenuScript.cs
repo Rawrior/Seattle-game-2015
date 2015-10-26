@@ -10,10 +10,12 @@ public class MenuScript : MonoBehaviour
     public GameObject players3Button;
     public GameObject players4Button;
     public GameObject backButton;
+    public GameObject controlButton;
     public string vertical;
     public bool playSelected = true;
     public bool creditsSelected;
     public bool exitSelected;
+    public bool controlSelected;
     public bool players2Selected = true;
     public bool players3Selected;
     public bool players4Selected;
@@ -29,6 +31,7 @@ public class MenuScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        Time.timeScale = 1;
         PlayersPlaying.player1Points = 0;
         PlayersPlaying.player2Points = 0;
         PlayersPlaying.player3Points = 0;
@@ -45,7 +48,7 @@ public class MenuScript : MonoBehaviour
         {
             menuTwo();
         }
-        else if (currentLevel == 1)
+        else if (currentLevel == 1 || currentLevel == 5)
         {
             menuCredits();
         }
@@ -79,13 +82,29 @@ public class MenuScript : MonoBehaviour
         {
             selectTimer = 0;
             creditsSelected = false;
+            controlSelected = true;
+        }
+        else if (controlSelected == true && Input.GetAxis(vertical) >= 1 && selectTimer >= 0.15f)
+        {
+            selectTimer = 0;
+            controlSelected = false;
+            creditsSelected = true;
+        }
+        else if (controlSelected == true && Input.GetAxis(vertical) <= -1 && selectTimer >= 0.15f)
+        {
+            selectTimer = 0;
+            controlSelected = false;
             exitSelected = true;
+        }
+        if (controlSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
+        {
+            Application.LoadLevel(5);
         }
         else if (exitSelected == true && Input.GetAxis(vertical) >= 1 && selectTimer >= 0.15f)
         {
             selectTimer = 0;
+            controlSelected = true;
             exitSelected = false;
-            creditsSelected = true;
         }
         if (exitSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
@@ -176,8 +195,7 @@ public class MenuScript : MonoBehaviour
     {
         if (playSelected == true && Application.loadedLevel == 0)
         {
-            playButton.SetActive(true);
-            
+            playButton.SetActive(true);      
         }
         else if (playSelected == false && Application.loadedLevel == 0)
         {
@@ -230,6 +248,14 @@ public class MenuScript : MonoBehaviour
         else if (players4Selected == false && Application.loadedLevel == 2)
         {
             players4Button.SetActive(false);
+        }
+        if (controlSelected == true && Application.loadedLevel == 0)
+	    {
+            controlButton.SetActive(true);
+	    }
+        else if (controlSelected == false && Application.loadedLevel == 0)
+        {
+            controlButton.SetActive(false);
         }
     }
 }
