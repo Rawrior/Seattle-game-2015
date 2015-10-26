@@ -28,7 +28,8 @@ public class MenuScript : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update ()
-    {
+	{
+	    Time.timeScale = 1;
         PlayersPlaying.player1Points = 0;
         PlayersPlaying.player2Points = 0;
         PlayersPlaying.player3Points = 0;
