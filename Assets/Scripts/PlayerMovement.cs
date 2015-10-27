@@ -177,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //in here we are making a rollfunction when you click the right and left trigger on an xbox 360 controller.
         //first we check if you are allowed to perform a roll, turning false if you're already RollCooldown,  are in the air, or have rolled within the last second.
-        if (/*!Airborne && */Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
+        if (Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
             if (spawnCampProtection >= 2)
             {
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
             RollCooldown = true;
         }
         
-        if (/*!Airborne &&*/ -Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
+        if (-Input.GetAxis(rollDirectionLeft) >= 0.1f && !RollCooldown)
         {
             if (spawnCampProtection >= 2)
             {
