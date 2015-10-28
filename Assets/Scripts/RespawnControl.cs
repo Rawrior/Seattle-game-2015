@@ -34,7 +34,10 @@ public class RespawnControl : MonoBehaviour
 	void Update ()
     {
 
-        if (PlayersPlaying.player1Points >= 15 || PlayersPlaying.player2Points >= 15 || PlayersPlaying.player3Points >= 15 || PlayersPlaying.player4Points >= 15)
+        if (PlayersPlaying.player1Points >= 15 
+         || PlayersPlaying.player2Points >= 15
+         || PlayersPlaying.player3Points >= 15 
+         || PlayersPlaying.player4Points >= 15)
         {
             Application.LoadLevel(4);
         }

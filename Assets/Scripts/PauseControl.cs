@@ -4,50 +4,65 @@ using UnityEngine.UI;
 
 public class PauseControl : MonoBehaviour
 {
+    //---------
+    //Variables
+    //---------
+
+    //The text to indicate the game is paused.
     public Text text;
     public Text text2;
-    public bool Pause;
-    //public float resumeTimer;
-	// Use this for initialization
-	void Start ()
-    {
-	
-	}
+
+    //Bool to keep in check if the game is paused or not.
+    private bool pause;
 	
 	// Update is called once per frame
 	void Update ()
     {
-        //Debug.Log(Time.timeScale);
+        //Calls the method for pausing.
         PauseMethod();
 	}
 
+    //Method for handling the pausing itself.
     void PauseMethod()
     {
-        if (Pause == false && Input.GetKeyDown(KeyCode.Joystick1Button7))
+        //Check if player 1 presses the start button and the game is unpaused.
+        if (!pause && Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
-            Debug.Log("pausing");
-            Pause = true;
-            //resumeTimer = +Time.deltaTime;
+            //Sets the game-state to paused.
+            pause = true;
         }
-        else if (Pause == true && Input.GetKeyDown(KeyCode.Joystick1Button7))
+        //check if the game is paused and player 1 presses the start button.
+        else if (pause && Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
-            Debug.Log("unpausing");
-            Pause = false;
+            //Sets the game-state to be unpaused.
+            pause = false;
         }
-        if (Pause == true)
+
+        //Checks if the game is paused.
+        if (pause)
         {
+            //If it is, display some text on screen.
             text2.text = "GAME HAS BEEN PAUSED";
             text.text = "Press START to unpause or BACK to go to menu";
+
+            //And set the timescale to 0, effectively stopping everything.
             Time.timeScale = 0;
         }
-        else if (Pause == false)
+        //Check if the game is unpaused.
+        else if (!pause)
         {
+            //Set the pause-text to nothing.
             text2.text = "";
             text.text = "";
+
+            //Force the time-scale to run normal speed.
             Time.timeScale = 1;
         }
-        if (Pause == true && Input.GetKeyDown(KeyCode.Joystick1Button6))
+
+        //If the game is paused and player 1 presses back...
+        if (pause && Input.GetKeyDown(KeyCode.Joystick1Button6))
         {
+            //... Then load the main menu.
             Application.LoadLevel(0);
         }
     }
