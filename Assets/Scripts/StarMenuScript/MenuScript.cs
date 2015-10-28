@@ -69,7 +69,7 @@ public class MenuScript : MonoBehaviour
         {
             selectTimer = 0;
             playSelected = false;
-            creditsSelected = true;
+            controlSelected = true;
         }
         else if (creditsSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
@@ -79,25 +79,25 @@ public class MenuScript : MonoBehaviour
         {
             selectTimer = 0;
             creditsSelected = false;
-            playSelected = true;
+            controlSelected = true;
         }
         else if (creditsSelected == true && Input.GetAxis(vertical) <= -1 && selectTimer >= 0.15f)
         {
             selectTimer = 0;
             creditsSelected = false;
-            controlSelected = true;
+            exitSelected = true;
         }
         else if (controlSelected == true && Input.GetAxis(vertical) >= 1 && selectTimer >= 0.15f)
         {
             selectTimer = 0;
             controlSelected = false;
-            creditsSelected = true;
+            playSelected = true;
         }
         else if (controlSelected == true && Input.GetAxis(vertical) <= -1 && selectTimer >= 0.15f)
         {
             selectTimer = 0;
             controlSelected = false;
-            exitSelected = true;
+            creditsSelected = true;
         }
         if (controlSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
@@ -106,7 +106,7 @@ public class MenuScript : MonoBehaviour
         else if (exitSelected == true && Input.GetAxis(vertical) >= 1 && selectTimer >= 0.15f)
         {
             selectTimer = 0;
-            controlSelected = true;
+            creditsSelected = true;
             exitSelected = false;
         }
         if (exitSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
