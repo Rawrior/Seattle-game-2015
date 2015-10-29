@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 415d577d71ee9354984dc397e29a3298
-timeCreated: 1446141335
+guid: 27126273d390a8441878469507de2019
+timeCreated: 1446141615
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: RedBowArrowSheet_0
-    21300002: RedBowArrowSheet_1
-    21300004: RedBowArrowSheet_2
+    21300000: GreenBowArrowSheet1_0
+    21300002: GreenBowArrowSheet1_1
+    21300004: GreenBowArrowSheet1_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,7 +53,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: RedBowArrowSheet_0
+    - name: GreenBowArrowSheet1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -63,7 +63,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RedBowArrowSheet_1
+    - name: GreenBowArrowSheet1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -73,7 +73,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: RedBowArrowSheet_2
+    - name: GreenBowArrowSheet1_2
       rect:
         serializedVersion: 2
         x: 64
