@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     public string Horizontal;
     public string Jump;
+    public string Jump2;
     public string RollLeft;
 	
     // Use this for initialization
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         Horizontal = "Horizontal0" + tag[gameObject.tag.Length - 1];
         RollLeft = "LT0" + tag[gameObject.tag.Length - 1];
 	    Jump = "Jump0" + tag[gameObject.tag.Length - 1];
+        Jump2 = "Jump0" + tag[gameObject.tag.Length - 1];
         //RollRight = "RT0" + tag[gameObject.tag.Length - 1];
         LayerMask = ~LayerMask;
     }
@@ -97,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         Roll(RollLeft);
         //RollMethod(RollLeft, RollRight);
         wallJump();
-        JumpMethod(Jump);
+        JumpMethod(Jump, Jump2);
         RaycastMethod();
         IFrames();
 
@@ -125,10 +127,10 @@ public class PlayerMovement : MonoBehaviour
         }   
     }
 
-    void JumpMethod(string JumpButton)
+    void JumpMethod(string JumpButton, string JumpButton2)
     {
         //adds velocity to the current playing player to give it a jump.
-        if (airborne == false && Input.GetButtonDown(JumpButton) && jumpDuration <= jumpTime)
+        if (airborne == false && (Input.GetButtonDown(JumpButton) || Input.GetButtonDown(JumpButton2)) && jumpDuration <= jumpTime)
         {
             Debug.Log("Jumping");
             airborne = true;

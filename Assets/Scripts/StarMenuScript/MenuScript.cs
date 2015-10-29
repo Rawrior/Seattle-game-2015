@@ -109,7 +109,7 @@ public class MenuScript : MonoBehaviour
             creditsSelected = true;
             exitSelected = false;
         }
-        if (exitSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (exitSelected == true && (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Joystick1Button1)))
         {
             Application.Quit();
         }
@@ -177,7 +177,7 @@ public class MenuScript : MonoBehaviour
             players3Selected = false;
             players2Selected = true;
         }
-        if (backSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if ((backSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0)) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             Application.LoadLevel(0);
         }
@@ -188,7 +188,7 @@ public class MenuScript : MonoBehaviour
     {
         playSelected = false;
         backSelected = true;
-        if (backSelected == true && Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (backSelected == true && (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Joystick1Button1)))
         {
             Application.LoadLevel(0);
         }
